@@ -66,15 +66,13 @@ FLAG: dimi{iamlocalhost}
 ## MISC
 ### guess_returns
 
-~~*게싱.. 시부레..*~~
-
 게싱이 하나 더 나와따~
 
 생각나는거 유튜브, 픽시브, 임거 다 들어가 보았지만 안되었다!
 
 음.. 비트면 뭐가 있지? 하다가 `goo.gl` 삘받아서 해도 안되서 비슷한거 `bit.ly` 하니까 잘 되었다!
 
-준호형꺼 보고 라업쓰는거라.. 저도 플래그를 모릅니다?
+플래그 모르고 있었는데 [@w3bn00b](https://github.com/w3bn00b)님이 PR 해주셨다! 감사의 말씀을 올리고 싶다. 
 
 ```
 FLAG: dimi{Th1s_1s_3xp3r1enc3_b4sed_gu3ss1ng_1sn't_1t?}
