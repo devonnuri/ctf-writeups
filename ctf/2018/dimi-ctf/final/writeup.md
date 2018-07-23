@@ -77,7 +77,7 @@ FLAG: dimi{iamlocalhost}
 준호형꺼 보고 라업쓰는거라.. 저도 플래그를 모릅니다?
 
 ```
-FLAG: dimi{IDK :(}
+FLAG: dimi{Th1s_1s_3xp3r1enc3_b4sed_gu3ss1ng_1sn't_1t?}
 ```
 
 ### MAAATH
