@@ -88,6 +88,9 @@
   * [See (10pt)](#see-10pt)
 
 ## Web
+
+### Basic (50pt)
+
 ```
 Find the flag this page
 Flag Structure : flag is {real flag}
@@ -114,8 +117,42 @@ Ctrl+U로 소스보기를 이용해서 플래그를 알아내면 된다.
 FLAG: W3b_is_S1mp1e
 ```
 
-### Basic (50pt)
 ### Connect (150pt)
+
+```
+Referer : wantconnection
+User-Agent : iwant!!!!
+Go!
+```
+
+저기에 있는 조건대로 헤더를 만들어서 보내면 될것같다.
+
+cURL로 풀면 쉬울것 같긴한데 잘 모르니까 python requests로 푼다.
+
+```python
+import requests
+headers = {
+  'user-agent': 'iwant!!!!',
+  'referer': 'wantconnection'
+}
+req = requests.get('http://wargame_sec.kongju.ac.kr/web/connect/connect.php', headers=headers)
+print(req.text)
+```
+
+```html
+<!-- 중략 -->
+<div class="row">
+    <div class="col-lg-12 text-center">
+        Key is Us3r_Ag3nt_@nd_R3f3r3r
+    </div>
+</div>
+<!-- 중략 -->
+```
+
+```
+FLAG: Us3r_Ag3nt_@nd_R3f3r3r
+```
+
 ### Find (300pt)
 ### Web1_Project3 (200pt)
 ### Web2_Project3 (200pt)
