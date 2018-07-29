@@ -1,6 +1,6 @@
 # 공주대학교 정보보호영재교육원 Wargame
 
-![](rank.png)
+![](img/rank.png)
 
 ~~올클잼 :grin:~~
 
@@ -154,6 +154,50 @@ FLAG: Us3r_Ag3nt_@nd_R3f3r3r
 ```
 
 ### Find (300pt)
+
+```
+1000점을 만들면 Flag가 나온다!
+1000을 만들어 주세요!
+Prob
+```
+
+소스를 보니까 hidden input이 있다.
+
+![](img/find.png)
+
+딱 보니 base64인것 같다.
+Submit 버튼이 없으니 일단 F12를 누르고 Console탭에 들어간 후 다음을 실행시키자.
+
+```javascript
+document.querySelector('form').submit();
+```
+
+포인트가 1이 추가 되었다. 그러면 이걸 계속 반복하면 될것 같지만, 아쉽게도 Console에서는 불가능하니 python으로 해결하자.
+
+PHP 세션ID도 필요 할것 같으니 쿠키에 넣고 돌려주자
+
+```python
+import requests
+from base64 import b64encode
+
+for i in range(1001):
+    req = requests.post('http://wargame_sec.kongju.ac.kr/web/find/prob.php', data={'HaHa': b64encode(str(i).encode())}, cookies={'PHPSESSID': 'jcrcp6kp5ksl2shh1g6b2esei3'})
+
+    if i != 1000:
+      print(req.text[0:150])
+    else:
+      print(req.text)
+```
+
+```
+Flag is W1nn3r_C0ngr4tur4t1on</br>Prize - Point 1000 : Flag</br>Your Point : 1000<form method='POST' action='prob.php'><input type='hidden' name='HaHa
+Prize - Point 1000 : Flag</br>Your Point : 1001<form method='POST' action='prob.php'>
+```
+
+```
+FLAG: W1nn3r_C0ngr4tur4t1on
+```
+
 ### Web1_Project3 (200pt)
 ### Web2_Project3 (200pt)
 ### Web3_Project3 (200pt)
