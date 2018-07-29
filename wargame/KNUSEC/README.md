@@ -88,6 +88,32 @@
   * [See (10pt)](#see-10pt)
 
 ## Web
+```
+Find the flag this page
+Flag Structure : flag is {real flag}
+```
+
+이 페이지에 플래그가 숨겨져 있다고 한다.
+
+Ctrl+U로 소스보기를 이용해서 플래그를 알아내면 된다.
+
+```html
+<!-- 중략 -->
+<div class="row">
+    <div class="col-lg-12 text-center">
+        Find the flag this page</br>
+        Flag Structure : flag is {real flag}
+        <!--flag is {W3b_is_S1mp1e}-->
+        </form>
+    </div>
+</div>
+<!-- 중략 -->
+```
+
+```
+FLAG: W3b_is_S1mp1e
+```
+
 ### Basic (50pt)
 ### Connect (150pt)
 ### Find (300pt)
