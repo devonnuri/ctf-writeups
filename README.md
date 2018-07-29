@@ -9,3 +9,7 @@ CTF나 워게임에서 풀고나서 쓸 라이트업이다.
 ## 2018
  * [DIMI CTF (KDMHS CTF) Prequal](ctf/2018/dimi-ctf/prequal/README.md)
  * [DIMI CTF (KDMHS CTF) Final](ctf/2018/dimi-ctf/final/README.md)
+
+## Wargame
+
+ * [KNUSEC](wargame/KNUSEC/README.md)
