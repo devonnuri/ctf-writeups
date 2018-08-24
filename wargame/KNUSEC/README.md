@@ -630,6 +630,39 @@ FLAG: C0mpr3ssi0n_F1le
 ```
 
 ### Trust (500pt)
+
+다음 BMP 파일이 주어진다.
+
+![](img/trust.bmp)
+
+문제 설명에 다음과 같이 나와있다.
+
+```
+Trust, But Don't believe the header
+```
+
+헤더를 믿지 말라고 했으니까 BMP 헤더 구조를 한번 살펴보자.
+
+![](img/trust.png)
+
+이 파일이 가장 잘 나와있다.
+
+우리는 height을 건드려서 숨겨진 것들을 찾을것이다.
+
+보통 width는 안쓴다. 왜나하면 width를 늘리게 되면 나머지 것들이 따라와서 파일이 이상하게 되기 때문이다.
+
+![](img/trust-2.png)
+
+![](img/trust-3.png)
+
+이렇게 적당히 `0x40`으로 바꿔주면 bmp 파일에는 이렇게 나온다.
+
+![](img/trust-2.bmp)
+
+```
+FLAG: HAHAHA_HEADER_REDAEH_AHAHAH
+```
+
 ### forensic1_Project3 (200pt)
 ### forensic2_Project3 (200pt)
 ### forensic3_Project3 (200pt)
