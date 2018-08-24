@@ -664,6 +664,23 @@ FLAG: HAHAHA_HEADER_REDAEH_AHAHAH
 ```
 
 ### forensic1_Project3 (200pt)
+
+그냥 오픈스테고 같아서 0.7.3 버전으로 돌렸다.
+
+![](img/Forensic1_Project3.png)
+
+근데 구버전이라고 한다. 대부분 구버전이라고 뜨면 0.5.2 버전으로 하면 잘 된다. 알고리즘이 그 뒤로 바뀌었나보다 ㅇㅅㅇ
+
+![](img/Forensic1_Project3-2.png)
+
+됐다!
+
+![](img/Forensic1_Project3-3.png)
+
+```
+FLAG: White Shirts
+```
+
 ### forensic2_Project3 (200pt)
 ### forensic3_Project3 (200pt)
 ### USB_Project3 (200pt)
