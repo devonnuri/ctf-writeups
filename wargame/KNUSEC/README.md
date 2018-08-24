@@ -682,7 +682,37 @@ FLAG: White Shirts
 ```
 
 ### forensic2_Project3 (200pt)
+
+jpg 파일이 주어지는데 열리지 않는다.
+
+DIE로 까보자.
+
+![](img/Forensic2_Project3.png)
+
+PDF다? 확장자를 `.pdf`로 바꾸고 열어보았다.
+
+![](img/Forensic2_Project3-2.png)
+
+```
+FLAG: poweroverwhelming
+```
+
 ### forensic3_Project3 (200pt)
+
+pptx로 확장자를 변환 해준 다음 오피스로 들어가서 복구 해주면 된다!
+
+![](img/Forensic3_Project3.png)
+
+???
+
+![](img/Forensic3_Project3-2.png)
+
+괘꿀죔
+
+```
+FLAG: q!@#$%7
+```
+
 ### USB_Project3 (200pt)
 ### 18_forensic1 (150pt)
 ### 18_forensic2 (100pt)
