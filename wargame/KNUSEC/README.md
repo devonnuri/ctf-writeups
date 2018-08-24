@@ -561,7 +561,74 @@ FLAG: Brann@@@@U_Web
 
 ## Forensic
 ### ForensicPower (150pt)
+PPT 파일이 주어진다.
+
+오피스 파일들은 대부분 zip으로 압축된다. 압축을 풀어보자.
+
+`ppt/media/` 경로로 들어가면 파일이 하나 더 주어진다.
+
+![](img/ForensicPower.png)
+
+```
+FLAG: Funny_Forensic
+```
+
 ### Decompress (300pt)
+![](img/Decompress.png)
+
+끝이 `==`로 끝나는거 봐서 base64인것 같다. 디코딩해보자.    
+
+```python
+import base64
+data = open("Prob", "rb").read()
+decoded = base64.b64decode(data)
+open("Prob-decoded", "wb").write(decoded)
+```
+
+디코딩 한것을 DIE에 돌려보면 다음과 같이 나온다.
+
+![](img/Decompress-2.png)
+
+확장자를 `.gz`로 바꾸고 압축을 해제하면 다음과 같이 나온다.
+
+![](img/Decompress-3.png)
+
+저 `3` 파일을 DIE에 돌려보면 또 다음과 같이 나온다.
+
+![](img/Decompress-4.png)
+
+그러면 이번에는 Python zlib 라이브러리로 Decompress 해보자.
+
+```python
+import zlib
+
+open('3-decompressed', 'wb').write(zlib.decompress(open('3', 'rb').read()))
+```
+
+그 다음 또또 DIE로 돌려보면 다음과 같이 나온다.
+
+![](img/Decompress-5.png)
+
+압축을 풀어주자.
+
+![](img/Decompress-6.png)
+
+또, DIE로 돌려보자.
+
+![](img/Decompress-7.png)
+
+`.7z`로 바꾼뒤에 압축을 풀어보자.
+
+![](img/Decompress-8.png)
+
+(!!!)
+
+![](img/Decompress-9.png)
+
+```
+FLAG: C0mpr3ssi0n_F1le
+```
+
 ### Trust (500pt)
 ### forensic1_Project3 (200pt)
 ### forensic2_Project3 (200pt)
