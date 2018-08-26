@@ -85,6 +85,8 @@
   * [Forest (10pt)](#forest-10pt)
   * [See (10pt)](#see-10pt)
 
+---
+
 ## Web
 
 ### Basic (50pt)
@@ -314,65 +316,65 @@ php://filter/convert.base64-encode/resource=index.php
 
 ```php
 <?php
-	// Key is : LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
+    // Key is : LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
 ?>
 <html>
-	<head>
-		<title>web05</title>
-		<style>
-			html, body{
-				width: 100%;
-				margin: 0;
-				padding: 0;
-				text-align: center;
-			}
-			body{
-				margin-top: 40px;
-			}
-			.output{
-				width: 800px;
-				height: 120px !important;
-				border: 1px solid #aaa;
-				margin: 0 auto 20px auto;
-				overflow-y: scroll;
-			}
-			.source{
-				width: 504px;
-				margin: 20px auto;
-			}
-		</style>
-	</head>
-	<body>
-		<h1>LFI (Local File Inclusion)</h1>
-		<form method="get">
-		<input type="text" name="url"/>
-		<input type="submit" value="ViewFile">
-		</form>
-		<div class="output">
-			<?php
-				if(isset($_GET["url"]) && !empty($_GET["url"])){
-					$escape_pattern = array("etc","passwd", "ini", "%", "/");
-					if(in_array($_GET["url"], $escape_pattern)){
-						echo "No Hack~!";
-						exit;
-					}
-					if(!file_exists($_GET["url"])){
-						echo "No File Exists!\n";
-					}
-					include $_GET["url"];
-				}else if(isset($_GET["url"]) && empty($_GET["url"])){
-					echo "Empty!";
-				}
-			?>
-		</div>
-		<hr>
-		<div class="source">
-			index.php SOURCE<br />
-			<?php
-				include "./source.html";
-			?>
-		</div>
-	</body>
+    <head>
+        <title>web05</title>
+        <style>
+            html, body{
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+            }
+            body{
+                margin-top: 40px;
+            }
+            .output{
+                width: 800px;
+                height: 120px !important;
+                border: 1px solid #aaa;
+                margin: 0 auto 20px auto;
+                overflow-y: scroll;
+            }
+            .source{
+                width: 504px;
+                margin: 20px auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>LFI (Local File Inclusion)</h1>
+        <form method="get">
+        <input type="text" name="url"/>
+        <input type="submit" value="ViewFile">
+        </form>
+        <div class="output">
+            <?php
+                if(isset($_GET["url"]) && !empty($_GET["url"])){
+                    $escape_pattern = array("etc","passwd", "ini", "%", "/");
+                    if(in_array($_GET["url"], $escape_pattern)){
+                        echo "No Hack~!";
+                        exit;
+                    }
+                    if(!file_exists($_GET["url"])){
+                        echo "No File Exists!\n";
+                    }
+                    include $_GET["url"];
+                }else if(isset($_GET["url"]) && empty($_GET["url"])){
+                    echo "Empty!";
+                }
+            ?>
+        </div>
+        <hr>
+        <div class="source">
+            index.php SOURCE<br />
+            <?php
+                include "./source.html";
+            ?>
+        </div>
+    </body>
 </html>
 ```
 
@@ -532,9 +534,9 @@ FLAG: yeeZY_BOost
 ```html
 <!-- 중략 -->
 <form method="post" action="./page/login_ok.php">
-	ID : <input type="text" name="id" value="XXX.XXX.XXX.XXX" readonly=""><br>
-	PS : <input type="password" name="ps"><br>
-	<input type="submit" value="login">
+    ID : <input type="text" name="id" value="XXX.XXX.XXX.XXX" readonly=""><br>
+    PS : <input type="password" name="ps"><br>
+    <input type="submit" value="login">
 </form>
 <!-- 중략 -->
 ```
@@ -544,9 +546,9 @@ FLAG: yeeZY_BOost
 ```html
 <!-- 중략 -->
 <form method="post" action="./page/login_ok.php">
-	ID : <input type="text" name="id" value="127.0.0.1" readonly=""><br>
-	PS : <input type="password" name="ps[]"><br>
-	<input type="submit" value="login">
+    ID : <input type="text" name="id" value="127.0.0.1" readonly=""><br>
+    PS : <input type="password" name="ps[]"><br>
+    <input type="submit" value="login">
 </form>
 <!-- 중략 -->
 ```
@@ -558,6 +560,8 @@ FLAG: yeeZY_BOost
 ```
 FLAG: Brann@@@@U_Web
 ```
+
+---
 
 ## Forensic
 ### ForensicPower (150pt)
@@ -714,7 +718,93 @@ FLAG: q!@#$%7
 ```
 
 ### USB_Project3 (200pt)
+
+본 문제는 세문제로 나뉘어져 있습니다.
+
+```
+종근이와 삼식이는 평소 친한 친구 사이이다.
+어느 날, 컴퓨터 시간에 삼식이가 USB를 컴퓨터에 꽂고 그냥 가버렸다.
+USB를 발견한 종근이는 그 USB가 삼식이 USB라는 사실을 알고 있던 터라 삼식이에게 가져다 줄려고 
+하였지만, 가져다 준다는 사실을 그만 잊어버리고 수업이 마칠 때까지 주지 못하여 내일 주기로 결심하였다.
+집으로 온 종근이는 평소 포렌식에 관심이 있던 터라 삼식이의 USB를 뒤져보기 시작하는데...
+```
+
+파일로 E01 파일(FTK Imager로 분석할 수 있는 파일)이 주어진다.
+
+#### 1번 문제
+
+```
+삼식이는 평소 야구팬이라 야구동영상을 항상 USB에 가지고 다닌다.
+동영상을 찾아라!
+```
+
+![](img/USB_Project3.png)
+
+저 baseball.mp4를 다운받는다.
+
+하지만 파일이 문제가 생겼다면서 안된다.
+
+나는 툴키디니까 `Stellar Pheonix Video Repair` 라는 툴을 써서 복구 할거다.
+
+돈이 없어서 무료버전을 쓰고 있는데 플래그를 확인하는데는 문제가 되지 않는다.
+
+미리보기를 하면 ~~익숙한~~ FBI Warning이 뜬다음에 **야**구 **동**영상이 뜨면서 `f6iwarin9`이라는 플래그가 뜨게 된다.
+
+```
+FLAG: f6iwarin9
+```
+
+#### 2번문제
+
+```
+삼식이는 평소 좋아하던 미영이에게 고백하기 위해 러브레터를 작성해 파일로 숨겨놓았다고 한다.
+숨겨놓은 러브레터를 찾자!
+```
+
+삼식폴더에 `2015`에 들어가면 일기.docx가 있는데 꽤 수상해보인다.
+
+![](img/USB_Project3-3.png)
+
+별거 없어보이지만 문서 끝에를 다른 색으로 바꾸면 다음과 같이 나온다.
+
+![](img/USB_Project3-4.png)
+
+저 비밀번호를 `2016/소중한/etc`에 들어가서 `갈매기.zip`를 추출해보자.
+
+![](img/USB_Project3-5.png)
+
+그리고 나서 비밀번호를 입력 하면 `loveletter.pdf`가 나온다.
+
+![](img/USB_Project3-6.png)
+
+:grin:
+
+```
+FLAG: Love9Letter!
+```
+
+#### 4번문제
+
+`삼식폴더/2016/` 폴더에 있는 `체스.exe`를 열면 다음과 같이 나온다.
+
+![](img/USB_Project3-7.png)
+
+이 `20160702`를 모든 PNG 파일을 OpenStego로 돌려보면 뭐가 나올 것 같다.
+
+모든이라고 해봤자 `삼식폴더/2016/소중한/etc/우리집.png` 하고 `삼순폴더/오빠들/박보검.png` 밖에 없다. 한번 돌려보자.
+
+![](img/USB_Project3-8.png)
+
+`박보검.png`을 해보니까 된다.
+
+![](img/USB_Project3-9.png)
+
+```
+FLAG: 386
+```
+
 ### 18_forensic1 (150pt)
+
 ### 18_forensic2 (100pt)
 ### 18_forensic3 (100pt)
 ### 18_forensic4 (150pt)
