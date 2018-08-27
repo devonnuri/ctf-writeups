@@ -891,7 +891,54 @@ FLAG: Goodjob
 ```
 
 ### 18_forensic2 (100pt)
+
+나중에 풀거다.
+
+그래도 플래그는 옛다
+
+```
+FLAG: MiSsloNc0mPiEte
+```
+
 ### 18_forensic3 (100pt)
+
+> 2016 Google CTF에 출제된 문제와 **정확히** 똑같다. 심지어 문제설명에 바이너리까지 (기껏 해봐야 파일명 바꾼거)
+
+`big-deal.gz` 파일을 주지만 gzip으로는 압축된 것 같지 않아보인다.
+
+![](img/18_forensic3.png)
+
+PCAP 파일인 것 같다.
+
+근데 CTF 문제에서는 설명에서 이렇게 나온다.
+
+```
+Sometimes the answer is immediately obvious, sometimes its obscured. Find the answer in here.
+```
+
+그냥 strings 해서 풀 수 있을거다.
+
+```
+devon@DESKTOP-CIPDIIG MINGW64 ~/Downloads
+$ strings big-deal.gz | egrep ".{10,}" | head
+NBDMAGICj0 W
+=3IHAVEOPTj0 W
+=3exportj0 W
+Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9
+Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9
+Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9
+Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9
+Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9
+Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9
+gfxdrivers
+```
+
+여기서 `Q1RGe2JldHRlcmZzLnRoYW4ueW91cnN9` 이걸 base64로 풀면 나온다.
+
+```
+FLAG: CTF{betterfs.than.yours}
+```
+
 ### 18_forensic4 (150pt)
 
 ## Crypto
