@@ -1036,6 +1036,43 @@ FLAG: 0xF3D8
 ```
 
 ### 18_crypto1 (50pt)
+
+```
+다음 암호문을 해독하시오.(key값 입력 시 단어 사이(공백)에는 space 대신 _를 입력하세요) 
+
+Gurxrlvfgborbeabggborgungvfabceboyrz.
+```
+
+누가 봐도 `rot13`일 것 같다.
+
+[rot13.com](https://rot13.com/)에 들어가면 쉽게 rotX를 쉽게 decode 할 수 있다.
+
+```
+Thekeyistobeornottobethatisnoproblem.
+```
+
+적당히 공백 주면,
+
+```
+The key is to be or not to be that is no problem.
+```
+
+그러면 플래그는 다음과 같다.
+
+```
+FLAG: to_be_or_not_to_be_that_is_no_problem
+```
+
+이어야 하는데 인증 가능한 플래그는 다음과 같다.
+
+```
+FLAG: to_be_or_not_to_be_that_is_problem
+```
+
+:thinking:
+
+불편하네요 ㅇㅅㅇ
+
 ### 18_crypto2 (100pt)
 ### 18_crypto3 (100pt)
 ### 18_crypto4 (100pt)
