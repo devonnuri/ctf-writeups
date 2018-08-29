@@ -967,6 +967,27 @@ FLAG: 1NT3RST3LL4
 ```
 
 ### Crypto1_Project3 (200pt)
+
+```
+너는 기본이 되있니? 
+
+SGVsbG8sIFdvcmxkIQ== 
+```
+
+아마도요..?
+==로 끝나는거 보니까 base64인것 같다.
+
+사이트 들어가기도 귀찮으니까 쉘켜서 풀자.
+
+```shell
+$ echo "SGVsbG8sIFdvcmxkIQ==" | base64 -d
+Hello, World!
+```
+
+```
+FLAG: Hello, World!
+```
+
 ### Crypto2_Project3 (200pt)
 ### Crypto3_Project3 (200pt)
 ### 18_crypto1 (50pt)
