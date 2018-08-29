@@ -943,6 +943,29 @@ FLAG: CTF{betterfs.than.yours}
 
 ## Crypto
 ### Crypto2 (300pt)
+
+```
+Ke agrdvfegtdjp, ccvfagrxhb kj rwx dtfatlg qw ccvcfzlv fsujyvxg qi gcyctdyibcp zl hnqj r upr hjrr dgza rsiactzxtw dcirxxg erl gxof zr. Tgqtpnibcp umtl bqk mu bhuvju ifgmccm wpkcgvsrkgdg, pwk btgwgj rwx agjqpzs eflixbv km ias kertkqggrdk. Wp rl tgqtpnibcp jawxag, kft bbvvlsxr efkbnbktyibcp zluhforrxhb qi ktlgcxc, gxtgiptw hq rq eeokertqh, kj ccvfagrtw iuzlv tb geagrdvzmc tzifpxmvo, xccxfckgcz qkgftkhgor iaov tyc hbnp zt kscu gu wseiwemsf. Wmg mseylxvon icplcpj, yc xbeiwemwqe qrasov shnoncw jlsu r nhxiff-ppgrqd ccvfagrxhb mvw vxbgiyixr dp yc tzifpxmvo. Zr xl wp gpxgqkgjt icujgqes vf btvfagr ias ovqhtug ngiacwk ndlggjqxgu vyc zxm, dlr, uhf c ncae-rgjgvgsf vlrkmrkgdg geycbx, zciet vcogsithkflpe fgjmjkqgj ycw gmzja tfg icfnwtvb. Pg owkfdkwbvb gxqkggtgh erl ttgkcw sxqtpni mvg dchloiv uxmv vyc zxm rimkbrgu zn mvg fpxzwprrdk hq icrbdkvlil, pwk ldm hq llpnhjfpxssf zlixfevnihfu. Wjpz wu 1ER3GLH3NC4 
+
+Hint : Key length is 6
+```
+
+구글에 `cipher key length 6` 같이 검색하면 비제네르 암호(Vigenère cipher)를 사용 할 수 있다는 것을 알 수 있다.
+
+`vigenere cipher decoder with key length` 라고 구글링 하면 [다음 사이트](https://www.guballa.de/vigenere-solver)가 나오게 된다.
+
+거기에 암호문을 넣고 language를 English로, key length를 6으로 두고 돌리면 다음과 같이 나온다.
+
+![](img/Crypto2.png)
+
+```
+It is in principle possible to decrypt the message without possessing the key, but, for a well-designed encryption scheme, large computational resources and skill are required. An authorized recipient can easily decrypt the message with the key provided by the originator to recipients, but not to unauthorized interceptors. Flag is 1NT3RST3LL4
+```
+
+```
+FLAG: 1NT3RST3LL4
+```
+
 ### Crypto1_Project3 (200pt)
 ### Crypto2_Project3 (200pt)
 ### Crypto3_Project3 (200pt)
