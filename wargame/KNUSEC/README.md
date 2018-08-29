@@ -1282,6 +1282,26 @@ FLAG: vrnitdzrpihn
 
 ### 18_crypto4 (100pt)
 
+![](img/18_crypto4.png)
+
+뭐지 왜 암호학인데 PNG를 주지..? (스테가노그래피가 항상 포렌식으로 나왔는ㄷ...)
+
+무튼 그냥 오픈스테고를 돌렸다.
+
+![](img/18_crypto4-2.png)
+
+구글 맵스에 검색했다.
+
+![](img/18_crypto4-3.png)
+
+센트럴 파크! 입니다
+
+~~ㅇㄴ 왜 어째서 그림은 에펠탑인데 센트럴파크냐 고오...~~
+
+```
+FLAG: Central_Park
+```
+
 ## Pwnable
 ### Pwnable1 (100pt)
 ### Pwnable2 (200pt)
