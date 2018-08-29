@@ -1003,10 +1003,8 @@ FLAG: Hello, World!
 ```python
 s = '73 32 108 111 118 101 32 121 111 117 33 32 77 97 109 97'
 print(''.join(map(lambda x: chr(int(x)), s.split(' '))))
-```
 
-```
->>> I love you! Mama
+# I love you! Mama
 ```
 
 플래그가 나온다. 왠지 플래그에서 폰케알 느낌이 스멀스멀 난다.
@@ -1225,6 +1223,63 @@ FLAG: DES
 ```
 
 ### 18_crypto3 (100pt)
+
+```
+Plain-Text : car
+Encrypted Text : cpk
+
+Plain-Text : elephant
+Encrypted Text : eaxpwtni
+
+Plain Text : cryptography
+Encrypted :???
+
+---
+
+어떠한 암호화 방식이 사용되었는지 유추한 후 해당 평문에 대한 암호문 값을 맞추시오.
+```
+
+세글자씩 다음과 같은 패턴을 보인다.
+
+```
+[x, rot15(x), rot19(x)]
+```
+
+파이썬 코드를 짜자!
+
+rot 함수는 [여기](https://eddmann.com/posts/implementing-rot13-and-rot-n-caesar-ciphers-in-python/)에 어ㅡ썸한 고차 함수를 찾아서 써보았다.
+
+```python
+def rot(n):
+    from string import ascii_lowercase as lc, ascii_uppercase as uc
+    lookup = str.maketrans(lc + uc, lc[n:] + lc[:n] + uc[n:] + uc[:n])
+    return lambda s: s.translate(lookup)
+
+def encode(s):
+    for i, ch in enumerate(list(s)):
+        o = ord(ch) - 97
+        if i % 3 == 0:
+            print(ch, end='')
+        elif i % 3 == 1:
+            print(rot(15)(ch), end='')
+        else:
+            print(rot(19)(ch), end='')
+
+encode('cryptography')
+```
+
+```
+FLAG: cgrpihggtpwr
+```
+
+...이어야 하는데 분명 알고리즘은 맞는데 인증되는 플래그는 조금 특이하다.
+
+:unamused:
+
+```
+FLAG: vrnitdzrpihn
+```
+
 ### 18_crypto4 (100pt)
 
 ## Pwnable
