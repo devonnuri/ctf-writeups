@@ -1074,6 +1074,156 @@ FLAG: to_be_or_not_to_be_that_is_problem
 불편하네요 ㅇㅅㅇ
 
 ### 18_crypto2 (100pt)
+
+```python
+import random
+import copy
+
+
+def cbc_genkey():
+    key=[]
+    for n in range(9):
+        key.append(random.randint(0,1))
+    return key
+
+
+def cbc_encrypt(keybits, ivbits, plain):
+    plainbits=[]
+    cipherbits=[]
+    for i in plain:
+        temp=bin(ord(i))
+        for j in range(7):
+            plainbits.append(int(temp[j+2]))
+            		
+    for i in range(len(plainbits)/12):
+        pblock=[]
+        for j in range(12):
+            pblock.append(plainbits[12*i+j]^ivbits[j])
+        ivbits=sdes_encrypt(keybits,pblock)
+        cipherbits[i*12:i*12+12]=ivbits
+
+    temp='0b'
+    cipher=''
+    j=0
+    for i in cipherbits:
+        if j%7==0 and j!=0:
+
+            cipher+=chr(int(temp,2))
+            temp=''
+            temp+='0b'      
+        temp += str(i)
+        j+=1
+        
+    cipher+=chr(int(temp,2))    
+    return cipher
+
+def cbc_decrypt(keybits, ivbits, cipher):
+    
+    plainbits=[]
+    cipherbits=[]
+
+    for i in cipher:
+        temp=bin(ord(i))   
+        for j in range(len(temp)-2):
+            while len(temp)!=9 and j==0:
+                cipherbits.append(0)
+                temp+='0'
+            cipherbits.append(int(temp[j+2]))
+    
+    for i in range(len(cipherbits)/12):
+        temp=sdes_decrypt(keybits,cipherbits[12*i:12*i+12])
+        for j in range(12):
+            plainbits.append(temp[j]^ivbits[j])
+        ivbits=copy.deepcopy(cipherbits[12*i:12*i+12])
+
+
+    temp='0b'
+    plain=''
+    j=0
+    for i in plainbits:
+        if j%7==0 and j!=0:
+            plain+=chr(int(temp,2))
+            temp=''
+            temp+='0b'      
+        temp += str(i)
+        j+=1
+    plain+=chr(int(temp,2))    
+    return plain
+
+
+sbox1=[[[1,0,1],[0,1,0],[0,0,1],[1,1,0],[0,1,1],[1,0,0],[1,1,1],[0,0,0]],
+       [[0,0,1],[1,0,0],[1,1,0],[0,1,0],[0,0,0],[1,1,1],[1,0,1],[0,1,1]]]
+
+sbox2=[[[1,0,0],[0,0,0],[1,1,0],[1,0,1],[1,1,1],[0,0,1],[0,1,1],[0,1,0]],
+       [[1,0,1],[0,1,1],[0,0,0],[1,1,1],[1,1,0],[0,1,0],[0,0,1],[1,0,0]]]
+
+def sdes_compute_function(rblock,roundkey):
+    xor=[]
+    expen=rblock[0:2]+rblock[3:4]+rblock[2:4]+rblock[2:3]+rblock[4:6]
+    for i in range(8):
+        xor.append(expen[i]^roundkey[i])
+    L=xor[0:4]
+    R=xor[4:8]
+    s1=sbox1[L[0]][L[1]*4+L[2]*2+L[3]]
+    s2=sbox2[R[0]][R[1]*4+R[2]*2+R[3]]
+       
+    return s1+s2
+
+def sdes_encrypt(key,pblock):
+    rblock=pblock[6:12]
+    lblock=pblock[0:6]
+    for i in range(3):
+        if (i+8)%9>=7:
+            roundkey=key[i%9:(i+8)%9]
+        else:
+            roundkey=key[i%9:9]+key[0:(i+8)%9]
+        if i==8:
+            roundkey=key[8:9]+key[0:7]
+		
+        val=sdes_compute_function(rblock,roundkey)
+        
+        temp=copy.deepcopy(rblock)
+        rblock=[]
+        for j in range(6):
+            rblock.append(val[j]^lblock[j])
+        lblock=copy.deepcopy(temp)
+        
+    return lblock+rblock
+
+def sdes_decrypt(key,cblock):
+    lblock=cblock[0:6]
+    rblock=cblock[6:12]
+    i=2
+    while i >= 0:
+        if (i+8)%9>=7:
+            roundkey=key[i%9:(i+8)%9]
+        else:
+            roundkey=key[i%9:9]+key[0:(i+8)%9]
+        if i==8:
+            roundkey=key[8:9]+key[0:7]
+
+        val=sdes_compute_function(lblock,roundkey)
+
+        temp=copy.deepcopy(lblock)
+        lblock=[]
+        for j in range(6):
+            lblock.append(val[j]^rblock[j])
+        rblock=copy.deepcopy(temp)
+        i-=1
+        
+    return lblock+rblock
+```
+
+이런 코드가 주어지고 무슨 알고리즘인지 맞추라고 한다.
+
+누가봐도 DES다.
+
+:wink:
+
+```
+FLAG: DES
+```
+
 ### 18_crypto3 (100pt)
 ### 18_crypto4 (100pt)
 
