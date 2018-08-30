@@ -1303,6 +1303,10 @@ FLAG: Central_Park
 ```
 
 ## Pwnable
+
+> 공주대 워게임의 Pwnable은 Pwnable이 아닌 리버싱이다.
+> Pwnable에 대해 궁금한 분들은 [pwnable.kr](http://pwnable.kr/) 같은 곳에서 연습하길 바란다.
+
 ### Pwnable1 (100pt)
 
 .elf 파일이 주어진다. IDA로 까보자.
@@ -1366,6 +1370,98 @@ FLAG: my!naefake!!
 ```
 
 ### Pwnable2 (200pt)
+
+386 ELF 파일이 주어진다. IDA로 까보자.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  signed int i; // [esp+10h] [ebp-78h]
+  signed int v5; // [esp+18h] [ebp-70h]
+  int v6; // [esp+1Ch] [ebp-6Ch]
+  int v7; // [esp+20h] [ebp-68h]
+  int v8; // [esp+24h] [ebp-64h]
+  int v9; // [esp+28h] [ebp-60h]
+  int v10; // [esp+2Ch] [ebp-5Ch]
+  int v11; // [esp+30h] [ebp-58h]
+  int v12; // [esp+34h] [ebp-54h]
+  int v13; // [esp+38h] [ebp-50h]
+  int v14; // [esp+3Ch] [ebp-4Ch]
+  int v15; // [esp+40h] [ebp-48h]
+  int v16; // [esp+44h] [ebp-44h]
+  int v17; // [esp+48h] [ebp-40h]
+  int v18; // [esp+4Ch] [ebp-3Ch]
+  int v19; // [esp+50h] [ebp-38h]
+  int v20; // [esp+54h] [ebp-34h]
+  int v21; // [esp+58h] [ebp-30h]
+  int v22; // [esp+5Ch] [ebp-2Ch]
+  int v23; // [esp+60h] [ebp-28h]
+  int v24; // [esp+64h] [ebp-24h]
+  int v25; // [esp+68h] [ebp-20h]
+  int v26; // [esp+6Ch] [ebp-1Ch]
+  int v27; // [esp+70h] [ebp-18h]
+  int v28; // [esp+74h] [ebp-14h]
+  int v29; // [esp+78h] [ebp-10h]
+
+  puts("Start!");
+  memset(&v5, 0, 0x68u);
+  v5 = 102;
+  v6 = 109;
+  v7 = 99;
+  v8 = 100;
+  v9 = 91;
+  v10 = 108;
+  v11 = 117;
+  v12 = 88;
+  v13 = 91;
+  v14 = 56;
+  v15 = 57;
+  v16 = 56;
+  v17 = 124;
+  v18 = 60;
+  v19 = 96;
+  v20 = 104;
+  v21 = 79;
+  v22 = 55;
+  v23 = 52;
+  v24 = 76;
+  v25 = 37;
+  v26 = 68;
+  v27 = 72;
+  v28 = 70;
+  v29 = 71;
+  for ( i = 0; i <= 25; ++i )
+  {
+    sleep(0x67Du);
+    printf("%c\n", i ^ *(&v5 + i));
+  }
+  putchar(10);
+  print_flag();
+  return 0;
+}
+```
+
+`print_flag` 함수는 페이크 함수이니 무시해도 된다.
+
+쉽게 0~25랑 저 Array랑 XOR 한걸 출력하는 것 같다. 파이썬으로 짜보자.
+
+```python
+>>> arr = [102,109,99,100,91,108,117,88,91,56,57,56,124,60,96,104,79,55,52,76,37,68,72,70,71]
+>>> for i in range(len(arr)):
+...     print(chr(arr[i] ^ i), end='')
+...
+flag_is_S133p1ng_&&_1Q^Q_
+```
+
+```
+FLAG: S133p1ng_&&_1Q^Q_
+```
+
+인 것 같지만 진짜 플래그는 다음과 같다. (3스택 ㅂㄷ)
+
+```
+FLAG: S133p1ng_&&_X0R_^^
+```
 
 ## Network
 ### Login (200pt)
