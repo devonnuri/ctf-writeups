@@ -1304,6 +1304,67 @@ FLAG: Central_Park
 
 ## Pwnable
 ### Pwnable1 (100pt)
+
+.elf 파일이 주어진다. IDA로 까보자.
+
+F5를 눌러 Pseudocode를 보면 다음과 같이 나온다.
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  char s1; // [rsp+10h] [rbp-30h]
+  char v5; // [rsp+11h] [rbp-2Fh]
+  char v6; // [rsp+12h] [rbp-2Eh]
+  char v7; // [rsp+13h] [rbp-2Dh]
+  char v8; // [rsp+14h] [rbp-2Ch]
+  char v9; // [rsp+15h] [rbp-2Bh]
+  char v10; // [rsp+16h] [rbp-2Ah]
+  char v11; // [rsp+17h] [rbp-29h]
+  char v12; // [rsp+18h] [rbp-28h]
+  char v13; // [rsp+19h] [rbp-27h]
+  char v14; // [rsp+1Ah] [rbp-26h]
+  char v15; // [rsp+1Bh] [rbp-25h]
+  char v16; // [rsp+1Ch] [rbp-24h]
+  char s2; // [rsp+20h] [rbp-20h]
+  unsigned __int64 v18; // [rsp+38h] [rbp-8h]
+
+  v18 = __readfsqword(0x28u);
+  s1 = 109;
+  v5 = 121;
+  v6 = 33;
+  v7 = 110;
+  v8 = 97;
+  v9 = 101;
+  v10 = 102;
+  v11 = 97;
+  v12 = 107;
+  v13 = 101;
+  v14 = 33;
+  v15 = 33;
+  v16 = 0;
+  printf("Input Password: ", argv, envp, argv);
+  __isoc99_scanf("%s", &s2);
+  if ( strcmp(&s1, &s2) )
+  {
+    puts("Wrong!");
+    exit(0);
+  }
+  return puts("Correct!");
+}
+```
+
+그냥 입력받은거랑 저 아스키 코드가 담긴 Array랑 strcmp 하는 거다.
+
+저 아스키 코드를 string으로 바꾸면 다음과 같이 나온다.
+
+```python
+>>> ''.join(map(chr, [109, 121, 33, 110, 97, 101, 102, 97, 107, 101, 33, 33]))
+my!naefake!!
+```
+
+```
+FLAG: my!naefake!!
+```
+
 ### Pwnable2 (200pt)
 
 ## Network
