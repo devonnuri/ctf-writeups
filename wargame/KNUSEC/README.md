@@ -1465,6 +1465,30 @@ FLAG: S133p1ng_&&_X0R_^^
 
 ## Network
 ### Login (200pt)
+
+pcapng 패킷 캡처 파일이 주어진다! 한번 Wireshark로 열어보자.
+
+필터로 `http`를 입력해보자. HTTP 관련 패킷만 필터링 해준다.
+
+![](img/Login.png)
+
+좀 많아 보인다. 그러면 로그인은 대부분 POST로 처리되니까 필터로 `http.request.method==POST` 이걸 입력해보자.
+
+![](img/Login-2.png)
+
+세 패킷 중 가장 끝에 있는 녀석을 사용해서 python requests 모듈로 POST를 보내보겠다.
+
+```python
+>>> import requests
+>>> res = requests.post('http://wargame_sec.kongju.ac.kr/network/login/login.php', data={'id': 'N3tw0rk1_Adm1n', 'pw': 'Network_Honey_Jam'})
+>>> res.text
+"<script>alert('Congraturation!');</script><script>alert('Flag is Sh4rk_1s_Op3n_the_Pc4p~');</script><script>history.back();</script>"
+```
+
+```
+FLAG: Sh4rk_1s_Op3n_the_Pc4p~
+```
+
 ### network1_Project3 (200pt)
 ### network2_Project3 (200pt)
 ### network3_Project3 (200pt)
