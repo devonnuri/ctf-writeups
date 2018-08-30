@@ -8,6 +8,12 @@
 
 `18_`로 시작하는 문제들은 작년(2017년)에 출제된 문제이니 준비하실거라면 푸는것도 추천드립니다!
 
+## Badges
+
+* ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge) 2018년 공주대 CTF에 출제된 문제
+* ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) 2017년 공주대 CTF에 출제된 문제
+* ![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge) 정상적인 플래그와 다른 플래그가 나오는 경우
+
 ## Table of Contents
 
 * Web
@@ -384,6 +390,8 @@ FLAG: LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
 
 ### 18_web1 (50pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ![](img/18_web1.png)
 
 참 고맙게도 `var_dump` 한 값을 보여준다. 그러면 아무 힌트도 없지만, 공주대 CTF 당시에는 대회 전 힌트에서 `$GLOBALS` 힌트를 주었으니 그걸로 풀면 된다.
@@ -399,6 +407,8 @@ FLAG: B0sSBaby!
 ```
 
 ### 18_web2 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 닫혀있다. 근데도 라업은 올릴거다.
 
@@ -437,6 +447,8 @@ FLAG: C0mmeDesGarcons!
 
 ### 18_web3 (100pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ![](img/18_web3.png)
 
 그때 어떻게 풀었는지는 기억 안나는데 지금 보니까 그냥 Guess! 버튼 누르니까 되더라..
@@ -448,6 +460,8 @@ FLAG: danbi!
 ```
 
 ### 18_web4 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_web4.png)
 
@@ -499,6 +513,8 @@ FLAG: yeeZY_BOost
 ```
 
 ### 18_web5 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_web5.png)
 
@@ -805,6 +821,8 @@ FLAG: 386
 
 ### 18_forensic1 (150pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 `DHL.zip` 파일을 압축 해제해보면
 
 ```
@@ -892,6 +910,8 @@ FLAG: Goodjob
 
 ### 18_forensic2 (100pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 나중에 풀거다.
 
 그래도 플래그는 옛다
@@ -901,6 +921,8 @@ FLAG: MiSsloNc0mPiEte
 ```
 
 ### 18_forensic3 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 > 2016 Google CTF에 출제된 문제와 **정확히** 똑같다. 심지어 문제설명에 바이너리까지 (기껏 해봐야 파일명 바꾼거)
 
@@ -940,6 +962,14 @@ FLAG: CTF{betterfs.than.yours}
 ```
 
 ### 18_forensic4 (150pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
+나중에 풀거다. 하지만 플래그는 던져드림 ><
+
+```
+FLAG: Con9ratulati0n!
+```
 
 ## Crypto
 ### Crypto2 (300pt)
@@ -1035,6 +1065,8 @@ FLAG: 0xF3D8
 
 ### 18_crypto1 (50pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ```
 다음 암호문을 해독하시오.(key값 입력 시 단어 사이(공백)에는 space 대신 _를 입력하세요) 
 
@@ -1072,6 +1104,8 @@ FLAG: to_be_or_not_to_be_that_is_problem
 불편하네요 ㅇㅅㅇ
 
 ### 18_crypto2 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ```python
 import random
@@ -1224,6 +1258,8 @@ FLAG: DES
 
 ### 18_crypto3 (100pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ```
 Plain-Text : car
 Encrypted Text : cpk
@@ -1281,6 +1317,8 @@ FLAG: vrnitdzrpihn
 ```
 
 ### 18_crypto4 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_crypto4.png)
 
@@ -1490,14 +1528,39 @@ FLAG: Sh4rk_1s_Op3n_the_Pc4p~
 ```
 
 ### network1_Project3 (200pt)
+
+```
+패킷에서 사용되고 있는 HTTP의 포트 번호는?
+Download
+```
+
+솔직히 HTTP 포트 번호 모르는 사람 없잖아요..?
+
+패킷 다운로드 하지 않아도 됩니다.
+
+```
+FLAG: 80
+```
+
 ### network2_Project3 (200pt)
 ### network3_Project3 (200pt)
 ### network4_Project3 (200pt)
 ### network5_Project3 (200pt)
 ### 18_network1 (50pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_network2 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_network3 (150pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_network4 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ## Reversing
 ### Reversing1 (100pt)
@@ -1512,9 +1575,20 @@ FLAG: Sh4rk_1s_Op3n_the_Pc4p~
 ### reversing5_Project3 (200pt)
 ### reversing6_Project3 (200pt)
 ### 18_reversing1 (150pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_reversing2 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_reversing3 (100pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_reversing4 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ## Misc
 ### Forest (10pt)
