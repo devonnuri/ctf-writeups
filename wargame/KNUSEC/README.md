@@ -390,7 +390,7 @@ FLAG: LFI_WITH_BASE64_IS_VERY_DANGEROUS_!
 
 ### 18_web1 (50pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_web1.png)
 
@@ -408,7 +408,7 @@ FLAG: B0sSBaby!
 
 ### 18_web2 (100pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
 닫혀있다. 근데도 라업은 올릴거다.
 
@@ -447,7 +447,7 @@ FLAG: C0mmeDesGarcons!
 
 ### 18_web3 (100pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_web3.png)
 
@@ -461,7 +461,7 @@ FLAG: danbi!
 
 ### 18_web4 (100pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_web4.png)
 
@@ -514,7 +514,7 @@ FLAG: yeeZY_BOost
 
 ### 18_web5 (200pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ![](img/18_web5.png)
 
@@ -735,6 +735,8 @@ FLAG: q!@#$%7
 
 ### USB_Project3 (200pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 본 문제는 세문제로 나뉘어져 있습니다.
 
 ```
@@ -922,7 +924,7 @@ FLAG: MiSsloNc0mPiEte
 
 ### 18_forensic3 (100pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
 > 2016 Google CTF에 출제된 문제와 **정확히** 똑같다. 심지어 문제설명에 바이너리까지 (기껏 해봐야 파일명 바꾼거)
 
@@ -1020,6 +1022,8 @@ FLAG: Hello, World!
 
 ### Crypto2_Project3 (200pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ```
 해석하시오!! 
 
@@ -1045,6 +1049,8 @@ FLAG: I love you! Mama
 
 ### Crypto3_Project3 (200pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ```
 어떠한 16진수의 문자를 0xDC2A 로 암호화하였더니 0x2FF2 라는 값이 나왔다. 
 암호화하기 전의 16진수의 문자를 알아내라!(답을 입력할 때 0x도 포함시켜야합니다.) 
@@ -1065,7 +1071,7 @@ FLAG: 0xF3D8
 
 ### 18_crypto1 (50pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ```
 다음 암호문을 해독하시오.(key값 입력 시 단어 사이(공백)에는 space 대신 _를 입력하세요) 
@@ -1258,7 +1264,7 @@ FLAG: DES
 
 ### 18_crypto3 (100pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
 ```
 Plain-Text : car
@@ -1409,6 +1415,8 @@ FLAG: my!naefake!!
 
 ### Pwnable2 (200pt)
 
+![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge)
+
 386 ELF 파일이 주어진다. IDA로 까보자.
 
 ```c
@@ -1529,6 +1537,8 @@ FLAG: Sh4rk_1s_Op3n_the_Pc4p~
 
 ### network1_Project3 (200pt)
 
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ```
 패킷에서 사용되고 있는 HTTP의 포트 번호는?
 Download
@@ -1543,9 +1553,21 @@ FLAG: 80
 ```
 
 ### network2_Project3 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### network3_Project3 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### network4_Project3 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### network5_Project3 (200pt)
+
+![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
 ### 18_network1 (50pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
