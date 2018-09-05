@@ -1592,7 +1592,204 @@ FLAG: 80
 
 ## Reversing
 ### Reversing1 (100pt)
+
+IDA에서 Hex-rays Decompiler(F5누르면 C-like한 pseudocode로 바꿔줌)를 애용해봅시다.
+
+![](img/Reversing1.png)
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  int v4; // [esp+14h] [ebp-Ch]
+  int i; // [esp+18h] [ebp-8h]
+  int v6; // [esp+1Ch] [ebp-4h]
+
+  __main();
+  v6 = 0;
+  v4 = 0;
+  for ( i = 1; i <= 10; ++i )
+    v6 += i;
+  printf("::  Input the Key  :  ");
+  scanf("%d", &v4);
+  if ( v4 == v6 )
+    puts("=====  wow!  =====");
+  else
+    puts("=====  nop!  =====");
+  return system("pause > nul");
+}
+```
+
+정수를 입력받고 1~10의 합을 비교한다.
+
+![](img/Reversing1-2.png)
+
+```
+FLAG: 55
+```
+
 ### Reversing2 (150pt)
+
+이것도 IDA로 돌려보면 다음과 같이 나온다.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  unsigned int v3; // eax
+  int v5; // [esp+1Fh] [ebp-A9h]
+  char v6; // [esp+23h] [ebp-A5h]
+  char v7; // [esp+24h] [ebp-A4h]
+  char v8; // [esp+25h] [ebp-A3h]
+  char v9; // [esp+26h] [ebp-A2h]
+  char v10; // [esp+27h] [ebp-A1h]
+  char v11; // [esp+28h] [ebp-A0h]
+  char v12; // [esp+29h] [ebp-9Fh]
+  char v13; // [esp+2Ah] [ebp-9Eh]
+  char v14; // [esp+2Bh] [ebp-9Dh]
+  char v15; // [esp+2Ch] [ebp-9Ch]
+  char v16; // [esp+2Dh] [ebp-9Bh]
+  char v17; // [esp+2Eh] [ebp-9Ah]
+  char v18; // [esp+2Fh] [ebp-99h]
+  char v19; // [esp+30h] [ebp-98h]
+  char v20; // [esp+31h] [ebp-97h]
+  int v21; // [esp+7Fh] [ebp-49h]
+  int v22; // [esp+83h] [ebp-45h]
+  char v23; // [esp+87h] [ebp-41h]
+  int v24; // [esp+94h] [ebp-34h]
+  int v25; // [esp+98h] [ebp-30h]
+  int v26; // [esp+9Ch] [ebp-2Ch]
+  int v27; // [esp+A0h] [ebp-28h]
+  int *v28; // [esp+A4h] [ebp-24h]
+  int *v29; // [esp+A8h] [ebp-20h]
+  int *v30; // [esp+ACh] [ebp-1Ch]
+  char v31; // [esp+B3h] [ebp-15h]
+  unsigned int v32; // [esp+B4h] [ebp-14h]
+  unsigned int i; // [esp+B8h] [ebp-10h]
+  int v34; // [esp+BCh] [ebp-Ch]
+
+  __main();
+  v22 = 0;
+  v24 = 0;
+  v3 = 0;
+  do
+  {
+    *(_DWORD *)(((unsigned int)&v23 & 0xFFFFFFFC) + v3) = 0;
+    v3 += 4;
+  }
+  while ( v3 < ((unsigned int)((char *)&v22 - ((unsigned int)&v23 & 0xFFFFFFFC) + 21) & 0xFFFFFFFC) );
+  v5 = 0;
+  v21 = 0;
+  memset(
+    (void *)((unsigned int)&v6 & 0xFFFFFFFC),
+    0,
+    4 * (((unsigned int)((char *)&v5 - ((unsigned int)&v6 & 0xFFFFFFFC) + 100) & 0xFFFFFFFC) >> 2));
+  v34 = 0;
+  v32 = 0;
+  v31 = 97;
+  for ( i = 0; i <= 0x13; ++i )
+    *((_BYTE *)&v22 + i) = v31++;
+  for ( i = 0; i <= 0x3A; ++i )
+  {
+    v30 = &v22;
+    v29 = &v22;
+    v28 = &v22;
+    v32 = 0;
+    while ( v32 <= 3 )
+    {
+      v27 = *v30;
+      *v30 = v30[1];
+      v30[1] = v27;
+      ++v32;
+      ++v30;
+    }
+    v32 = 0;
+    while ( v32 <= 8 )
+    {
+      v26 = *(signed __int16 *)v29;
+      *(_WORD *)v29 = *((_WORD *)v29 + 1);
+      *((_WORD *)v29 + 1) = v26;
+      ++v32;
+      v29 = (int *)((char *)v29 + 2);
+    }
+    v32 = 0;
+    while ( v32 <= 0x12 )
+    {
+      v25 = *(char *)v28;
+      *(_BYTE *)v28 = *((_BYTE *)v28 + 1);
+      *((_BYTE *)v28 + 1) = v25;
+      ++v32;
+      v28 = (int *)((char *)v28 + 1);
+    }
+  }
+  printf("::input the key  :  ");
+  scanf("%s", &v5);
+  if ( strlen((const char *)&v5) == 19 )
+  {
+    if ( (_BYTE)v5 == 99 )
+      ++v34;
+    if ( BYTE1(v5) == 111 )
+      ++v34;
+    if ( BYTE2(v5) == 109 )
+      ++v34;
+    if ( HIBYTE(v5) == 109 )
+      ++v34;
+    if ( v6 == 97 )
+      ++v34;
+    if ( v7 == 110 )
+      ++v34;
+    if ( v8 == 100 )
+      ++v34;
+    if ( v9 == 58 )
+      ++v34;
+    if ( v10 == 99 )
+      ++v34;
+    if ( v11 == 114 )
+      ++v34;
+    if ( v12 == 101 )
+      ++v34;
+    if ( v13 == 97 )
+      ++v34;
+    if ( v14 == 116 )
+      ++v34;
+    if ( v15 == 101 )
+      ++v34;
+    if ( v16 == 95 )
+      ++v34;
+    if ( v17 == 102 )
+      ++v34;
+    if ( v18 == 108 )
+      ++v34;
+    if ( v19 == 97 )
+      ++v34;
+    if ( v20 == 103 )
+      ++v34;
+  }
+  if ( v34 == 19 )
+    printf("::  flag  -  %s\n", &v22);
+  else
+    puts("::  nop");
+  system("pause > nul");
+  return 0;
+}
+```
+
+다른 부분은 모르겠고, 저 `if ( strlen((const char *)&v5) == 19 )` 이 부분부터 중요해보인다.
+
+저 밑에있는 아스키 코드 같은 걸 문자열로 바꿔보자.
+
+```python
+>>> arr = [99, 111, 109, 109, 97, 110, 100, 58, 99, 114, 101, 97, 116, 101, 95, 102, 108, 97, 103]
+>>> ''.join(map(chr, arr))
+'command:create_flag'
+```
+
+그럼 한번 저걸 콘솔에 입력해보자.
+
+![](img/Reversing2.png)
+
+```F
+FLAG: nopqrstabcdefghijklm
+```
+
 ### number (200pt)
 ### endecoded (150pt)
 ### rrrr (300pt)
