@@ -1601,6 +1601,31 @@ FLAG: girlsday
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
+```
+지현이는 회사의 기밀 문서 빼돌려 다운받은 혐의를 받고 있다.
+다운받은 비밀문서를 추출하여 지현이의 범죄 사실을 입증하라.
+```
+
+파일을 추출 해야한다고 되어 있다. 다행히도 와이어샤크에는 HTTP 패킷에서 파일을 추출하는 기능을 가지고 있다.
+
+![](img/Network4_Project3.png)
+
+![](img/Network4_Project3-2.png)
+
+Save를 누르면 확장자가 없는 파일이 나온다.
+
+DIE로 돌려보니 다음과 같다.
+
+![](img/Network4_Project3-3.png)
+
+압축을 해제했더니 PPT 파일이 주어졌다.
+
+![](img/Network4_Project3-4.png)
+
+```
+FLAG: eagle74
+```
+
 ### network5_Project3 (200pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
