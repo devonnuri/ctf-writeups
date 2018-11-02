@@ -1560,9 +1560,42 @@ FLAG: 80
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
+```
+www.daum.net에 서비스를 요청하고 있는 클라이언트의 IP주소는?
+```
+
+늘 하던대로 와이어 샤크를 켜보자.
+
+그리고 늘 하던대로 필터에 `http`를 넣자.
+
+![](img/Network2_Project3.png)
+
+Source에 있는 IP가 플래그인것 같다.
+
+```
+FLAG: 192.168.0.21
+```
+
 ### network3_Project3 (200pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
+
+```
+A 회사의 실적은 날이 갈수록 떨어지고 있었다.
+그러던 와중 회사에서 철수가 일을 안하고 놀고 있다는 소문이 있어
+철수가 무엇을 하는지 확인하기 위해 패킷을 캡처하였다.
+철수가 회사 업무시간에 검색하고 있는 내용이 무엇인가?
+```
+
+늘 하던대로 필터에 `http`를 넣으면 좀 많은게 나오는데, 대충 봐도 endpoint가 `/search`로 끝나는 녀석이 보여서 그걸 보았더니 다음과 같이 나왔다.
+
+![](img/Network3_Project3.png)
+
+`girlsday`를 검색한 것으로 보인다.
+
+```
+FLAG: girlsday
+```
 
 ### network4_Project3 (200pt)
 
