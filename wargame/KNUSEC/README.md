@@ -6,13 +6,13 @@
 
 공주대 여러분들 중 라업쓰실거 있으시면 PR 하시면 머지해드립니다
 
-`18_`로 시작하는 문제들은 작년(2017년)에 출제된 문제이니 준비하실거라면 푸는것도 추천드립니다!
+밑에 작년이나 재작년에 출제된 문제들에는 배지를 달아두었으니 참고해주시면 감사하겠습니다.
 
 ## Badges
 
 * ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge) 2018년 공주대 CTF에 출제된 문제
 * ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) 2017년 공주대 CTF에 출제된 문제
-* ![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge) 정상적인 플래그와 다른 플래그가 나오는 경우
+* ![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge) 정상적인 플래그가 인증이 되지 않는 문제
 
 ## Table of Contents
 
@@ -234,7 +234,7 @@ Test Account : admin/admin123
 
 뭔가 굉장히 로그인 하고 싶어진다.
 
-ID를 `admin`으로 하고 비밀번호를 `admin123`으로 해주면 됩니당!
+ID를 `admin`으로 하고 비밀번호를 `admin123`으로 해주면 됩니다.
 
 ![](img/Web1_Project3-2.png)
 
@@ -1630,21 +1630,162 @@ FLAG: eagle74
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2018-brightgreen.svg?longCache=true&style=for-the-badge)
 
+
+```
+해커 A는 공개된 와이파이의 DNS를 변조하여 사용자들의 데이터를 가로챌
+목적으로 관리자 페이지에 접속했으나 관리자 페이지에 비밀번호가 걸려있었다.
+하지만 패킷을 스니핑 하던 도중 관리자 페이지로 들어가는 관리자의 아이디를 보게 되는데...
+관리자의 암호를 찾아내라!!
+```
+
+되게 말을 빙빙꼬아서 말했는데, 결국 중요한건 관리자의 암호를 찾으라는거다.
+
+로그인이니까 대충 http method 중 POST라고 추측을 해서 필터를 `http.request.method==POST` 이렇게 넣어줬다.
+
+다음과 같이 필터를 주게 되면 POST 메서드에 해당하는 패킷만 표시하게 해준다.
+
+그러면 다음과 같이 하나의 패킷이 표시되는걸 알 수 있다.
+
+![](img/Network5_Project3.png)
+
+그 패킷의 Form Data를 보면 비밀번호가 나오는걸 알 수 있다!
+
+```
+FLAG: q1w2e3r4!
+```
+
 ### 18_network1 (50pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
+```
+웹 서필을 하던 중 마음에 드는 귀걸이 이미지를 저장하였다. 해당 귀걸이를 끼고 있는 주인은 누구인가?(답은 영문으로 작성하세요.)
+
++) readme.txt
+요새 귀걸이에 관심이 많은 세선이는 인터넷 서핑을 하던 중 자신에게 꼭 어울릴법한 귀걸이를 찾게 되었다. 그리고 그 사진을 자신의 컴퓨터에 저장했다.
+key는 영문으로 입력해주세요
+ex) 공주대 --> rhdwneo
+```
+
+[이전 문제](#network4_project3-200pt)와 마찬가지로 `File > Export Objects > HTTP`를 하게 되면 다음과 같은 파일들이 나오게 된다.
+
+![](img/18_network1.png)
+
+그중 이미지(image/jpeg)인 파일을 다운받아 확인해보면 다음의 사진이 나오게 된다.
+
+![](img/18_network1-2.jpg)
+
+위에 한글을 영어로 그대로 쓰라고 했으니 플래그는 다음과 같다.
+
+```
+FLAG: rladusdk
+```
 
 ### 18_network2 (100pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
+```
+ARP 스푸핑에 의해 ID와 PW가 유출되었다. 이 때 공격자의 MAC값과 피해자의 PW 값은?
+```
+
+먼저 압축파일인데 암호가 결려있다. 암호는 `syscore`인데 암호에 관련된 내용이 없다?
+
+아무튼 파일을 열어보자.
+
+![](img/18_network2.png)
+
+그럼 겁나 많은 ARP를 혼자 보내는게 보인다.
+
+Sender MAC address를 보니 공격자의 맥 주소는 `00:0c:29:f3:21:ad`인걸로 보인다.
+
+그리고 비밀번호를 알아야 하니 로그인은 주로 POST Method로 이루어지니 `http.request.method==POST` 필터를 쓰면 `login.php`로 요청하는 패킷이 나온다.
+
+![](img/18_network2-2.png)
+
+비밀번호는 `YONG_GAL`인것 같다.
+
+하지만 설명에는 플래그로 어떻게 두 값을 입력해야 하는지 나오지 않는다.
+
+두 문자열을 _(언더바)로 붙이면 되더라.
+
+```
+FLAG: 00:0c:29:f3:21:ad_YONG_GAL
+```
+
 ### 18_network3 (150pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
 
+```
+해당 패킷을 분석하여 신 캐릭터를 알아내시오.
+```
+
+FTP 패킷들을 쭉 읽다보면 `site.zip` 파일을 요청하는 것을 볼 수 있다.
+
+그 뒤로 ftp-data 패킷들이 여러개 있는데 size.zip 파일을 추출하는 방법은 여러가지 방법이 있다.
+
+처음에는 와이어샤크에 무슨 기능이 있는지 몰라서 밑에 Hex Viewer에 Content에 해당하는 부분을 긁어서 붙히는 노가다 작업을 한 기억이 있다.
+
+하지만 와이어샤크에는 `Follow TCP Stream`이라는 매력적인 기능이 있다.
+
+![](img/18_network3.png)
+
+첫번째 ftp-data 패킷을 선택한 뒤 `Analyze > Follow > TCP Stream`을 클릭한다.
+
+![](img/18_network3-2.png)
+
+그 다음 `Show and save data as`를 `Raw`로 고쳐서 바이너리로 받게 한다.
+
+마지막으로, `Save as`를 눌러서 zip파일로 저장한 뒤 열면 되게 많은 텍스트 파일들이 있다.
+
+그중 가장 크기가 큰 `kjeaefsyef.txt`라는 파일을 열면 일반 텍스트가 아닌 것 같아 보인다.
+
+가장 처음 보이는 글자가 JFIF인걸 보니 JPG 파일이라고 추측할 수 있다.
+
+하지만, 열게 되면 제대로 열지 못하는 걸 볼 수가 있다. 헥스 에디터로 열어보자.
+
+![](img/18_network3-3.png)
+
+JPG 파일은 처음 3바이트가 `FF D8 FF` 이어야 하지만 `00 00 00`으로 바뀐걸 볼 수 있다.
+
+이걸 원래대로 바꿔주게 되면 정상적으로 복구가 되어서 나온다.
+
+![](img/18_network3-4.jpg)
+
+```
+FLAG: Do_you_know_velkoz?
+```
+
 ### 18_network4 (200pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
+```
+해당 패킷을 분석하여 내가 가야 할 장소를 알아내시오.
+```
+
+파일을 열면 많은 패킷이 담겨져 있다.
+
+필터를 `http`로 하고 계속 살펴보면 30341번 패킷에 POST로 메일을 업로드를 하는 패킷이 있을거다.
+
+그걸 TCP Follow(Ctrl+Alt+Shift+T)하면 다음과 같이 나온다.
+
+![](img/18_network4.png)
+
+이걸 Show and save data as를 Raw로 바꿔서 저장한뒤 헥스 에디터로 열어준다.
+
+![](img/18_network4-2.png)
+
+그다음 JPG 시그니처(헤더: `FF D8 FF`, 푸터: `FF D9`)에 맞추어서 파일 앞뒤를 짤라주면 정상적으로 복구되어 다음과 같은 QR 코드가 나온다.
+
+![](img/18_network4-3.jpg)
+
+QR코드를 찍으면 [여기](https://m.site.naver.com/qrcode/view.nhn?v=08D0q)로 가게 되는데, 장소가 마이첼시라서 플래그는 `mychelsea`다. (역시 공주대 문제들은 슈퍼게싱)
+
+```
+FLAG: mychelsea
+```
 
 ---
 
