@@ -1990,7 +1990,99 @@ FLAG: nopqrstabcdefghijklm
 ```
 
 ### number (200pt)
+
+DIE로 까보면 .NET이다. .NEt을 디컴파일하는 방법은 여러방법이 있지만 필자 기준으로 가장 편한 JetBrains의 dotPeek을 써보도록 하겠다.
+
+dotPeek으로 까보면 이렇게 나온다.
+
+![](img/number.png)
+
+이런 문제가 있으면 푸는 방법은 두가지로 나뉠수 있다.
+
+직접 연산해서 플래그를 가져오는 방법과 저 프로젝트 파일을 Visual Studio 프로젝트로 변환한 뒤 알아서 연산된 플래그를 가져오면 될것이다.
+
+하지만, 연산이 복잡해보이지 않으니 직접 연산해보도록 하겠다. 변환하기 귀찮기도 하고..
+
+저 코드를 떼와서 c#으로 돌릴수도 있지만 귀찮으니까 파이썬으로 포팅해보자.
+
+```python
+flag = ""
+starting = 84
+flaging = [0, 20, -55, 34, 12, -46, 66, -20, 20, -67, 47, 7, -17, 25]
+
+flag += chr(starting)
+
+for i in range(13):
+    flag += chr(ord(flag[i]) + flaging[i+1])
+
+print(flag)
+```
+
+실행하면 다음과 같이 나온다.
+
+![](img/number-2.png)
+
+```
+FLAG: Th1S_1s_s0_fUn
+```
+
 ### endecoded (150pt)
+
+APK 파일을 준다.
+
+APK를 디컴파일하는건 여러 방법이 있지만 [온라인 사이트](http://www.javadecompilers.com/apk)를 사용하는 것도 한 방법이다.
+
+APK 디컴파일하는 툴이 지금 이 컴퓨터에 안 깔려있으니까 한번 써보도록 해보자. (TMI)
+
+MainActivity.java를 보자.
+
+```java
+package me.dyun.endecode;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
+import android.util.Log;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+public class MainActivity extends ActionBarActivity {
+    static final String pass = "B70a645GVoKVRFkFqHyjWV1mM2khzuoE3yQzi2ubESM=";
+    static final String secretKey = "0d290155f2106c14";
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView((int) C0150R.layout.activity_main);
+        try {
+            Log.i("ENDECODE", "The flag is " + decode(pass));
+        } catch (Exception e) {
+            System.err.println("ERROR WHILE DECODING");
+            e.printStackTrace();
+        }
+    }
+
+    public static String decode(String str) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        SecretKey secureKey = new SecretKeySpec(secretKey.getBytes(), "AES");
+        Cipher c = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        c.init(2, secureKey);
+        return new String(c.doFinal(Base64.decode(str, 0)), "UTF-8");
+    }
+}
+```
+
+base64로 디코딩한 pass를 secret키와 함께 `AES/ECB/PKCS5Padding`라는 알고리즘으로 복호화해서 로그로 보여주는 코드같다.
+
+그냥 실행해보자.
+
+
 ### rrrr (300pt)
 ### reversing1_Project3 (200pt)
 ### reversing2_Project3 (200pt)
