@@ -2082,6 +2082,11 @@ base64로 디코딩한 pass를 secret키와 함께 `AES/ECB/PKCS5Padding`라는 
 
 그냥 실행해보자.
 
+![](img/endecoded.png)
+
+```
+FLAG: flag_b34b302a19af530
+```
 
 ### rrrr (300pt)
 ### reversing1_Project3 (200pt)
