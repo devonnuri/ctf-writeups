@@ -2089,6 +2089,82 @@ FLAG: flag_b34b302a19af530
 ```
 
 ### rrrr (300pt)
+
+이 문제도 APK 리버싱 문제다.
+
+[apktool](https://github.com/skylot/jadx/releases/tag/v0.8.0)이라는 툴을 써서 디컴파일 해볼거다.
+
+`rrrr/res/layout/activity_main.xml`을 보면 다음의 코드가 나온다.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingBottom="@dimen/activity_vertical_margin" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="hint : res" />
+</RelativeLayout>
+```
+
+힌트가 `res`라고 하니 `res` 폴더를 찾아보도록 하자.
+
+`res` 폴더의 `strings.xml`을 보게 되면 여러 문자열이 있는데 그중 asdf로 시작하는 것만 가져오면 다음과 같다.
+
+```xml
+<string name="asdf1">T</string>
+<string name="asdf10">i</string>
+<string name="asdf11">s</string>
+<string name="asdf12" />
+<string name="asdf13">m</string>
+<string name="asdf14">M</string>
+<string name="asdf15">2</string>
+<string name="asdf16">k</string>
+<string name="asdf17">h</string>
+<string name="asdf18">z</string>
+<string name="asdf19">u</string>
+<string name="asdf2">h</string>
+<string name="asdf20">o</string>
+<string name="asdf21">E</string>
+<string name="asdf22">3</string>
+<string name="asdf3">e</string>
+<string name="asdf4" />
+<string name="asdf5">f</string>
+<string name="asdf6">l</string>
+<string name="asdf7">a</string>
+<string name="asdf8">g</string>
+<string name="asdf9" />
+```
+
+숫자 순서대로 정렬하면 다음과 같다.
+
+```xml
+<string name="asdf1">T</string>
+<string name="asdf2">h</string>
+<string name="asdf3">e</string>
+<string name="asdf4" />
+<string name="asdf5">f</string>
+<string name="asdf6">l</string>
+<string name="asdf7">a</string>
+<string name="asdf8">g</string>
+<string name="asdf9" />
+<string name="asdf10">i</string>
+<string name="asdf11">s</string>
+<string name="asdf12" />
+<string name="asdf13">m</string>
+<string name="asdf14">M</string>
+<string name="asdf15">2</string>
+<string name="asdf16">k</string>
+<string name="asdf17">h</string>
+<string name="asdf18">z</string>
+<string name="asdf19">u</string>
+<string name="asdf20">o</string>
+<string name="asdf21">E</string>
+<string name="asdf22">3</string>
+```
+
+```
+FLAG: mM2khzuoE3
+```
+
+
 ### reversing1_Project3 (200pt)
 ### reversing2_Project3 (200pt)
 ### reversing3_Project3 (200pt)
