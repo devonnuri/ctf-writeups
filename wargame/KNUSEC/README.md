@@ -1792,6 +1792,11 @@ FLAG: mychelsea
 ## Reversing
 ### Reversing1 (100pt)
 
+```
+Find Key!!!
+※Notice : Flag is Number
+```
+
 IDA에서 Hex-rays Decompiler(F5누르면 C-like한 pseudocode로 바꿔줌)를 애용해봅시다.
 
 ![](img/Reversing1.png)
@@ -1991,7 +1996,12 @@ FLAG: nopqrstabcdefghijklm
 
 ### number (200pt)
 
-DIE로 까보면 .NET이다. .NEt을 디컴파일하는 방법은 여러방법이 있지만 필자 기준으로 가장 편한 JetBrains의 dotPeek을 써보도록 하겠다.
+```
+6126을 고르면 키를 주는데 6126이 절대로 나오지 않는다!!!
+6126을 선택해주세요!!!
+```
+
+DIE로 까보면 .NET이다. .NET을 디컴파일하는 방법은 여러방법이 있지만 필자 기준으로 가장 편한 JetBrains의 dotPeek을 써보도록 하겠다.
 
 dotPeek으로 까보면 이렇게 나온다.
 
@@ -2027,6 +2037,10 @@ FLAG: Th1S_1s_s0_fUn
 ```
 
 ### endecoded (150pt)
+
+```
+Find Flag!
+```
 
 APK 파일을 준다.
 
@@ -2575,6 +2589,10 @@ FLAG: 2948015859
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge)
 
+```
+exe파일을 통해 Key값을 찾아내시오.
+```
+
 압축파일이 잠겨있는데 비밀번호는 `syscore`다.
 
 아무거나 넣고 실행시키면 다음과 같이 배부르다고 나온다.
@@ -2602,6 +2620,128 @@ FLAG: Find_chopstick
 ### 18_reversing2 (100pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
+```
+해당 파일을 통해 Key값을 찾아내시오.
+```
+
+![](img/18_reversing2.png)
+
+와.. 얼마만의 ELF파일이냐.. 정말 오랜만인것 같다. IDA64로 열어보자.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  signed int i; // [rsp+Ch] [rbp-94h]
+  signed int j; // [rsp+Ch] [rbp-94h]
+  __int64 v6; // [rsp+10h] [rbp-90h]
+  __int16 v7; // [rsp+18h] [rbp-88h]
+  char s2; // [rsp+20h] [rbp-80h]
+  char s1[16]; // [rsp+30h] [rbp-70h]
+  __int64 v10; // [rsp+40h] [rbp-60h]
+  __int64 v11; // [rsp+48h] [rbp-58h]
+  __int64 v12; // [rsp+50h] [rbp-50h]
+  int v13; // [rsp+58h] [rbp-48h]
+  __int16 v14; // [rsp+5Ch] [rbp-44h]
+  char v15[40]; // [rsp+60h] [rbp-40h]
+  unsigned __int64 v16; // [rsp+88h] [rbp-18h]
+
+  v16 = __readfsqword(0x28u);
+  v6 = 'mbNpdmjH';
+  v7 = 51;
+  v10 = ']go2AngU';
+  v11 = 'OB]qelkI';
+  v12 = 'pg`og';
+  v13 = 0;
+  v14 = 0;
+  puts(" ????? ");
+  puts(" ????? ");
+  puts(" ????? ");
+  puts(" ????? ");
+  printf("Pass code:", argv);
+  for ( i = 0; i <= 9; ++i )
+    s1[i] = *((_BYTE *)&v6 + i) ^ 3;
+  __isoc99_scanf("%s", &s2);
+  if ( !strncmp(s1, &s2, 9uLL) )
+  {
+    puts("Welcome to Kings Man ");
+    puts("Y0ur Code Name : ");
+    for ( j = 0; j <= 20; ++j )
+    {
+      v15[j] = *((_BYTE *)&v10 + j) ^ 2;
+      putchar(v15[j]);
+    }
+    putchar(10);
+  }
+  else
+  {
+    puts("Who are U.");
+  }
+  return 0;
+}
+```
+
+여기서 단축키 y를 통해 `v6`의 타입을 `char v6[10]`로, `v9`의 타입을 `char v9[21]`으로 바꿔준다.
+
+그럼 다음과 같이 더 보기 쉽게 나타난다.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  signed int i; // [rsp+Ch] [rbp-94h]
+  signed int j; // [rsp+Ch] [rbp-94h]
+  char v6[10]; // [rsp+10h] [rbp-90h]
+  char s2; // [rsp+20h] [rbp-80h]
+  char s1[16]; // [rsp+30h] [rbp-70h]
+  char v9[21]; // [rsp+40h] [rbp-60h]
+  int v10; // [rsp+58h] [rbp-48h]
+  __int16 v11; // [rsp+5Ch] [rbp-44h]
+  char v12[40]; // [rsp+60h] [rbp-40h]
+  unsigned __int64 v13; // [rsp+88h] [rbp-18h]
+
+  v13 = __readfsqword(0x28u);
+  strcpy(v6, "HjmdpNbm3");
+  strcpy(v9, "UgnA2og]Ikleq]BOgo`gp");
+  v10 = 0;
+  v11 = 0;
+  puts(" ????? ");
+  puts(" ????? ");
+  puts(" ????? ");
+  puts(" ????? ");
+  printf("Pass code:", argv);
+  for ( i = 0; i <= 9; ++i )
+    s1[i] = v6[i] ^ 3;
+  __isoc99_scanf("%s", &s2);
+  if ( !strncmp(s1, &s2, 9uLL) )
+  {
+    puts("Welcome to Kings Man ");
+    puts("Y0ur Code Name : ");
+    for ( j = 0; j <= 20; ++j )
+    {
+      v12[j] = v9[j] ^ 2;
+      putchar(v12[j]);
+    }
+    putchar(10);
+  }
+  else
+  {
+    puts("Who are U.");
+  }
+  return 0;
+}
+```
+
+그럼 Pass code를 알아내보자.
+
+```python
+print(''.join(map(lambda x: chr(ord(x) ^ 3), list('HjmdpNbm3')))) # KingsMan0
+```
+
+![](img/18_reversing2-2.png)
+
+```
+FLAG: WelC0me_Kings_@Member
+```
 
 ### 18_reversing3 (100pt)
 
