@@ -2573,10 +2573,31 @@ FLAG: 2948015859
 
 ### 18_reversing1 (150pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge) ![](https://img.shields.io/badge/status-different%20flag-yellow.svg?longCache=true&style=for-the-badge)
 
 압축파일이 잠겨있는데 비밀번호는 `syscore`다.
 
+아무거나 넣고 실행시키면 다음과 같이 배부르다고 나온다.
+
+![](img/18_reversing1.png)
+
+IDA로 까보자.
+
+![](img/18_reversing1-2.png)
+
+`dword_243F8`은 "edit"라는 title을 가진 Window다. 그러므로 Main Window의 Title인 !String1이 무조건 거짓이 되니 이 부분만 수정해주면 플래그가 나오게 될것 같다.
+
+![](img/18_reversing1-3.png)
+
+이 부분을 `jne`에서 `je`로 바꿔주자. 그리고 나서 실행해보면 플래그가 나온다.
+
+![](img/18_reversing1-4.png)
+
+하지만 저 플래그 전체를 인증해도 인증이 안되고, "Find chopstick !"을 인증해도 안되고 진짜 플래그는 다음과 같다.
+
+```
+FLAG: Find_chopstick
+```
 
 ### 18_reversing2 (100pt)
 
