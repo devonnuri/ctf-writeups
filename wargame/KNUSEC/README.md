@@ -2164,11 +2164,217 @@ FLAG: flag_b34b302a19af530
 FLAG: mM2khzuoE3
 ```
 
-
 ### reversing1_Project3 (200pt)
+
+```
+짜잔~! 파일이 생겼네~
+```
+
+DIE를 돌려보자.
+
+![](img/reversing1_Project3.png)
+
+MinGW로 컴파일한 exe파일이다. IDA를 돌려보자.
+
+F5를 눌러 Hex-rays Decompiler를 확인해보자.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  __main();
+  Create();
+  Kill();
+  return 0;
+}
+```
+
+`Create`와 `Kill` 함수가 있는 것을 볼 수 있다.
+
+`Create` 함수를 클릭해 Create 함수에 무엇이 있나 한번 보자.
+
+```c
+char Create(void)
+{
+  FILE *v0; // eax
+  char result; // al
+  FILE *v2; // [esp+10h] [ebp-18h]
+  FILE *v3; // [esp+14h] [ebp-14h]
+
+  v3 = fopen("./hello.txt", "w");
+  if ( v3 != 0 )
+  {
+    fputs("hi.. key file in C:/Windows/ folder", v3);
+    fclose(v3);
+  }
+  v0 = fopen("C:/Windows/analysis.txt", "w");
+  v2 = v0;
+  result = v0 != 0;
+  if ( result )
+  {
+    fputs("Key is Very Interesting!", v2);
+    result = fclose(v2);
+  }
+  return result;
+}
+```
+
+대충 해석하면 다음과 같다.
+
+```
+1. hello.txt 파일을 열어 그 안에 "hi.. key (...)" 이런 문자열을 넣는다.
+2. C:\Windows\analysis.txt에 "Key is Very Interesting!"을 쓴다.
+```
+
+키가 나왔다.
+
+```
+FLAG: Very Interesting!
+```
+
 ### reversing2_Project3 (200pt)
+
+```
+내 친구를 찾아줘 :-(
+```
+
+똑같이 MinGW로 컴파일한 EXE파일이다. 헥스레이를 돌려보자.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  __main();
+  Create();
+  return 0;
+}
+```
+
+Create를 살펴보자.
+
+```c
+HINSTANCE Create(void)
+{
+  FILE *v1; // [esp+20h] [ebp-18h]
+  FILE *v2; // [esp+24h] [ebp-14h]
+
+  v2 = fopen("./please.txt", "w");
+  if ( v2 != 0 )
+  {
+    fputs("Oh, I'm sad. Because, My friend is hiding. Please find him :(", v2);
+    fclose(v2);
+  }
+  v1 = fopen("./kikiki.txt", "w");
+  if ( v1 != 0 )
+  {
+    fputs("kikikikiki.. Key is hiding@", v1);
+    fclose(v1);
+  }
+  SetFileAttributesA("./kikiki.txt", 2u);
+  return ShellExecuteA(0, "open", "C:/Users/user/Desktop/please.txt", 0, 0, 5);
+}
+```
+
+대충 분석하면 다음과 같다.
+
+```
+1. 현재 디렉토리의 please.txt에 "Oh, I'm sad (...)"를 쓴다.
+2. kikiki.txt 파일을 열고 "kikikiki.. (...)"를 쓴다.
+3. kikiki.txt의 attribute값을 2(숨김)로 바꾼다.
+4. please.txt 파일을 연다. (하지만 경로가 확실하지 않으므로 대부분의 경우 열리지 않는다.)
+```
+
+플래그가 나왔다?
+
+```
+FLAG: hiding@
+```
+
 ### reversing3_Project3 (200pt)
+
+```
+Stage 1, 2, 3(
+```
+
+압축 파일을 하나 준다. 파일 안에는 바이너리 파일과 이미지 한장이 있다.
+
+![](img/reversing3_Project3.png)
+
+두가지 방법이 있다. 제작자가 의도한 바는 이 소스코드를 분석해서 키를 얻어내는 것이다. 두가지 모두 해보자.
+
+#### 1번째 방법 : 직접 해보자
+
+콘솔 프로그램들은 실행과 동시에 인자를 넘길 수 있다. ex) `Stage.exe hello world`
+
+argc는 (실행파일 이름을 포함한) 인자의 개수, (실행파일 이름을 포함한) argv는 인자들이 담겨져 있는 변수다.
+
+저 소스코드를 분석해보면 다음과 같다.
+
+```
+1. 인자의 개수를 10개로 해라.
+2. 5번째 인자가 abc와 일치하도록 해라.
+3. 54와 6번쩨 인자를 정수로 바꾼것과 비트 AND 연산을 한게 38이 되게 해라.
+```
+
+나머지는 그냥 그렇다고 해도 Stage 3이 조금 힘들것 같다.
+
+일단 54는 이진수로 만들면 `0011 0110`이다. 그리고 38은 `0010 0110`이다. 그럼 어느 값을 넣어야 하는지 알 수 있다. 비트 AND 연산은 두 비트끼리 비교하여 두개 다 1일경우 1이다.
+
+```
+     0011 0110 (54)
+  &  0010 0110 (38) <--
+     ------------------
+     0010 0110 (38)
+```
+
+사실 여러 값이 있겠지만 가장 간단한 건 `38`을 넣는거다.
+
+그러면 인자들을 모두 정리하면 다음과 같다.
+
+```
+Stage.exe 0 0 0 0 abc 38 0 0 0
+```
+
+![](img/reversing3_Project3-2.png)
+
+```
+FLAG: Peace1@@@1
+```
+
+#### 두번째 방법 : IDA를 사용하자
+
+진짜 아이다는 진짜 사기다. 일단 돌려보자.
+
+![](img/reversing3_Project3-3.png)
+
+```
+FLAG: Peace1@@@1
+```
+
 ### reversing4_Project3 (200pt)
+
+```
+Password(
+```
+
+늘 그렇듯 헥스레이를 돌려보자.
+
+![](img/reversing4_Project3.png)
+
+어? 뭔가 이상한 느낌이 들거다.
+
+IDA View에서 Space bar를 누르면 Graph View로 넘어가니 한번 그래프를 보자.
+
+![](img/reversing4_Project3-2.png)
+
+지금 첫번째 체크를 보면 `[esp+1Ch]`에 0을 저장하지만, 두번째 체크에서는 cmp로 `[esp+1Ch]`와 0을 비교하니 무조건 1(참)이 될 수 밖에 없다. 그러므로 jz(jump if zero)를 만나 무조건 왼쪽으로만 가서 오른쪽 코드가 실행이 안되는 것이다.
+
+이럴 경우 패치를 하면 된다. 패치는 IDA에서 하기 힘드니 OllyDBG나 x64dbg를 사용하면 된다.
+
+OllyDBG는 정말 유명하고 자주 쓰이는 분석 툴이지만 너무 오래되서 필자는 별로 쓰지 않는다.
+
+그럼 x86dbg를 통해 바이너리를 열어보자. 그리고 비교하는 부분인 `401534`를 보자.
+
+
+
 ### reversing5_Project3 (200pt)
 ### reversing6_Project3 (200pt)
 ### 18_reversing1 (150pt)
