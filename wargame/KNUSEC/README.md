@@ -2291,7 +2291,7 @@ FLAG: hiding@
 ### reversing3_Project3 (200pt)
 
 ```
-Stage 1, 2, 3(
+Stage 1, 2, 3
 ```
 
 압축 파일을 하나 준다. 파일 안에는 바이너리 파일과 이미지 한장이 있다.
@@ -2352,7 +2352,7 @@ FLAG: Peace1@@@1
 ### reversing4_Project3 (200pt)
 
 ```
-Password(
+Password
 ```
 
 늘 그렇듯 헥스레이를 돌려보자.
@@ -2390,10 +2390,193 @@ FLAG: hel650lo
 ```
 
 ### reversing5_Project3 (200pt)
+
+```
+You know secret number?
+```
+
+IDA로 까면 다음과 같은 소스코드가 나온다.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  double v3; // ST18_8
+  double v4; // ST18_8
+  int v6; // [esp+2Ah] [ebp-26h]
+  __int16 v7; // [esp+2Eh] [ebp-22h]
+  char v8; // [esp+30h] [ebp-20h]
+  int v9; // [esp+31h] [ebp-1Fh]
+  __int16 v10; // [esp+35h] [ebp-1Bh]
+  char v11; // [esp+37h] [ebp-19h]
+  int v12; // [esp+38h] [ebp-18h]
+  int v13; // [esp+3Ch] [ebp-14h]
+  int v14; // [esp+40h] [ebp-10h]
+  int v15; // [esp+44h] [ebp-Ch]
+  int v16; // [esp+48h] [ebp-8h]
+  int v17; // [esp+4Ch] [ebp-4h]
+
+  __main();
+  v9 = 'zstf';
+  v10 = 12898;
+  v11 = 0;
+  v6 = 'ygsa';
+  v7 = 13174;
+  v8 = 0;
+  if ( !strcmp((const char *)&v9, (const char *)&v6) )
+  {
+    v17 = 54;
+    v16 = 21;
+    v15 = 0;
+    v3 = pow((long double)54 + (long double)21, 2.0);
+    v15 += (signed int)v3 / 98;
+    printf("nice! secret number is : %d\n", v15);
+  }
+  else
+  {
+    v14 = 19;
+    v13 = 21;
+    v12 = 3;
+    v4 = pow((long double)19 + (long double)21, 2.0);
+    v12 += (signed int)v4 / 98;
+    printf("fail! secret number is : %d\n", v12);
+  }
+  return 0;
+}
+```
+
+`zstf`와 `ygsa`를 비교해서 같으면 nice고 아니면 fail이 된다.
+
+v9와 v6을 같게 패치한 뒤 실행하는 방법도 있지만 귀찮으니까 nice쪽을 직접 연산해보자.
+
+python을 사용해서 직접 연산해봤다.
+
+![](img/reversing5_Project3.png)
+
+```
+FLAG: 57
+```
+
 ### reversing6_Project3 (200pt)
+
+```
+연산 후 배열에 저장되어 있는 값 모두를 나열하여 ,를 제외한 뒤 입력
+```
+
+IDA로 열었더니 에러가 뜬다.
+
+![](img/reversing6_Project3.png)
+
+무언가로 packed되어있다고 한다. 그럼 DIE로 어떻게 패킹되어 있는지 살펴보자.
+
+![](img/reversing6_Project3-2.png)
+
+UPX로 패킹되어 있나보다. 한번 언패킹해보자.
+
+[깃허브 UPX](https://github.com/upx/upx/releases)에서 upx를 다운로드 받고 다음 명령어를 실행해보자.
+
+```
+upx.exe -d Reverse_06.exe
+```
+
+![](img/reversing6_Project3-3.png)
+
+이제 언패킹된 파일을 다시 IDA로 열어보자.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  int v3; // eax
+  int v5; // [esp+18h] [ebp-28h]
+  int v6; // [esp+1Ch] [ebp-24h]
+  int v7; // [esp+20h] [ebp-20h]
+  int v8; // [esp+24h] [ebp-1Ch]
+  int v9; // [esp+28h] [ebp-18h]
+  int v10; // [esp+2Ch] [ebp-14h]
+  int v11; // [esp+30h] [ebp-10h]
+  int v12; // [esp+34h] [ebp-Ch]
+  int v13; // [esp+38h] [ebp-8h]
+  int i; // [esp+3Ch] [ebp-4h]
+
+  __main();
+  v5 = 1;
+  v6 = 0;
+  v7 = 5;
+  v8 = 3;
+  v9 = 87;
+  v10 = 4;
+  v11 = 62;
+  v12 = 3;
+  v13 = 12;
+  for ( i = 0; i <= 8; ++i )
+  {
+    v3 = Calc(*(&v5 + i));
+    *(&v5 + i) = v3;
+  }
+  return 0;
+}
+```
+
+언뜻 보기에는 배열의 개수가 9개인 것처럼 보이지만 사실은 i까지 포함해서 10개다.
+v5를 커서에 둔뒤 `y`키를 눌러 타입을 다음과 같이 변경해보자.
+
+![](img/reversing6_Project3-4.png)
+
+그 뒤 코드를 보게 되면 다음과 같다.
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  int v3; // eax
+  int v5[10]; // [esp+18h] [ebp-28h]
+
+  __main();
+  v5[0] = 1;
+  v5[1] = 0;
+  v5[2] = 5;
+  v5[3] = 3;
+  v5[4] = 87;
+  v5[5] = 4;
+  v5[6] = 62;
+  v5[7] = 3;
+  v5[8] = 12;
+  for ( v5[9] = 0; v5[9] <= 8; ++v5[9] )
+  {
+    v3 = calc(v5[v5[9]]);
+    v5[v5[9]] = v3;
+  }
+  return 0;
+}
+```
+
+이제 이 코드를 파이썬으로 옮겨보자.
+
+```python
+arr = [1, 0, 5, 3, 87, 4, 62, 3, 12, 0]
+
+arr[9] = 0
+while arr[9] <= 8:
+    arr[arr[9]] = (3 * arr[arr[9]] - 1 + 10) % 10
+    arr[9] += 1
+
+print(''.join(map(str, arr)))
+```
+
+```
+devon@DESKTOP-CIPDIIG MINGW64 /c/devonnuri/bin
+$ python rev6.py
+2948015859
+```
+
+```
+FLAG: 2948015859
+```
+
 ### 18_reversing1 (150pt)
 
 ![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+
+압축파일이 잠겨있는데 비밀번호는 `syscore`다.
+
 
 ### 18_reversing2 (100pt)
 
