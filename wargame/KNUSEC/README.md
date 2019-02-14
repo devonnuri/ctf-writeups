@@ -2745,7 +2745,19 @@ FLAG: WelC0me_Kings_@Member
 
 ### 18_reversing3 (100pt)
 
-![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)
+![](https://img.shields.io/badge/KNUSEC%20CTF-2017-brightgreen.svg?longCache=true&style=for-the-badge)`
+
+```
+해당 이미지에서 Key값을 찾으시오. 
+```
+
+이거 솔직히 리버싱이 아니라 포렌식에 들어가야 했을 문제 같다. 그 이유를 알아보자.머
+
+먼저 binwalk라는 프로그램을 써서 이 이미지 안에 무슨 파일들이 숨겨져 있는지 알아보자.
+
+![](img/18_reversing3.png)
+
+순서대로 빼보자.
 
 ### 18_reversing4 (200pt)
 
