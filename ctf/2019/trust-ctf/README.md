@@ -130,6 +130,30 @@ FLAG: TRUST{Easy_Local_file_traversal_N3xt_t1me_i_1l_us3_DB..:(}
 
 ## Reversing
 
+### MESS (100pts)
+
+일단 IDA로 까보자
+
+![](img/mess.png)
+
+대충 Str1에서 5를 더한 값이랑 입력받은 값에서 5를 더한 값이랑 비교(그니까 그냥 Str1이랑 비교하는거랑 같음)한다.
+
+그래서 맞게 되면 XOR와 더하기 연산해서 출력해준다.
+
+그러면 Str1을 한번 확인해보자.
+
+![](img/mess-2.png)
+
+`S3CRe7PA5sW0rD` 문자열을 입력한뒤 한번 확인해보자.
+
+![](img/mess-3.png)
+
+근데 이 문자열 범위가 charset마다 달라서 출력결과가 달라질수 있는데 필자는 cp949라서 다음과 같이 나왔다.
+
+```
+FLAG: TRUST{bBRWt>UHDé^5wQ}
+```
+
 ### 나를크랙! (472pts)
 
 ![](img/crackme.png)
