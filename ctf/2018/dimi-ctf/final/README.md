@@ -100,7 +100,7 @@ FLAG: dimi{Yeah, you are good at math!:)}
 
 [이어주는 코드](misc/image.py)
 
-이어주게되면 ELF ~~*(그 elf 말구..)*~~ 파일이 주어진다.
+이어주게되면 ELF 파일이 주어진다.
 
 실행시키면 플래그가 바로 나온다(?)
 
