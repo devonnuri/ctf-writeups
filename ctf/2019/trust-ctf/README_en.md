@@ -5,33 +5,33 @@
 
 > 공주대 영재 떨어진 뎁온누리 (2등, 2877pts)
 
-실제로 떨어졌습니다 흑흑흑...
+I've barely participated in any CTF, so I couldn't focus well on the challenge.
 
-저엉말 오랜만에 참가하는 CTF라 감을 거의 다 잃어 좀 속상하긴 했지만, 나름대로 결과는 잘 나온 것 같아서 다행입니다. 헤헤
+But, It was just as well that the result was not so bad :sunglasses:
 
-~~언제나 비어있는 포너블~~
+~~Annnnd, I can't touch any pwnable chall lol~~
 
-그럼 저퀄 라업 시작하겠습니다
+So, let the writeup begin.
 
 ## Web
 
 ### Archiver (464pts)
 
 ```
-엇 새롭게 생긴 Archive 시스템인듯 하당ㅎㅎ
+Oh, It seems like brand-new Archive system!
 
 http://archiver.trustctf.com/
 
-*flag는 /flag에 있습니다 *
+*The flag is in the /flag*
 
-Author : c2w2m2(이주창)
+Author : c2w2m2
 ```
 
 ![](img/archiver.png)
 
-다음과 같은 페이지에 "정말 감사하게도" 소스코드도 같이 준다.
+Thankfully, this chall gives us SOURCE CODE!
 
-중점적으로 볼 코드는 당연히 `main.py`이다.
+And, let's see `main.py` as the way we always do.
 
 ```py
 #-*- coding: utf-8 -*-
@@ -110,17 +110,17 @@ os.system('mkdir %s' % app.config['path'])
 app.run(host='0', port=4432, debug=False)
 ```
 
-정말 문제에 공을 들이신 것 같다.
+I think the author worked hard to make this chall.
 
-아무튼 플래그는 /flag에 있다고 하니 파일을 읽을 수 있는 viewArchive 부분을 보자.
+By the way, let's take a look at viewArchive which can read file because we need to read /flag.
 
-url부분은 해싱되기 때문에 어떻게 건들수 없지만 다행히도 맨 끝에 T(타임스탬프)를 필터링 하지 않아서 어떤 파일이든 가져올 수 있다.
+We can't actually manipulate the url part due to hashing function, but thankfully it doesn't hash or filter timestamp, so we can read any file that we want.
 
-그렇다면 뒤로 이동하면서 플래그를 찾으면 될것 같다.
+Then, we can find the flag, traversing backward.
 
 ![](img/archiver-2.png)
 
-일단 아무 사이트나 입력한 뒤 timestamp가 들어가야할 인자에 파일 이름을 넣어주면 된다.
+Input any website and enter JavaScript code with flag location that goes to specific time of archive.
 
 ![](img/archiver-3.png)
 
@@ -132,51 +132,55 @@ FLAG: TRUST{Easy_Local_file_traversal_N3xt_t1me_i_1l_us3_DB..:(}
 
 ### MESS (100pts)
 
-일단 IDA로 까보자
+Let's take a look at the Hex-rays pseudo-code.
 
 ![](img/mess.png)
 
-대충 Str1에서 5를 더한 값이랑 입력받은 값에서 5를 더한 값이랑 비교(그니까 그냥 Str1이랑 비교하는거랑 같음)한다.
+Compare the value added by 5 in Str1 and input value added by 5 (i.e. the same as just comparing it with Str1).
 
-그래서 맞게 되면 XOR와 더하기 연산해서 출력해준다.
+If two string is exactly same, then do XOR and plus operation and print it out.
 
-그러면 Str1을 한번 확인해보자.
+And, look at the Str1.
 
 ![](img/mess-2.png)
 
-`S3CRe7PA5sW0rD` 문자열을 입력한뒤 한번 확인해보자.
+Then, let's type `S3CRe7PA5sW0rD` and inspect what's going on next.
 
 ![](img/mess-3.png)
 
-근데 이 문자열 범위가 charset마다 달라서 출력결과가 달라질수 있는데 필자는 cp949라서 다음과 같이 나왔다.
+But, the range of this particular character could be different depending on charset, but the result is below as cp949.
+
+(I can't say it's a good chall..)
 
 ```
 FLAG: TRUST{bBRWt>UHDé^5wQ}
 ```
 
-### 나를크랙! (472pts)
+### Crack me! (472pts)
 
 ![](img/crackme.png)
 
-열었더니 ConfuserEx가 걸려있다. dnSpy로 까보자.
+It was packed with ConfuserEx. Let's open it with dnSpy.
 
 ![](img/crackme-2.png)
 
-모듈의 cctor이다. 으으 보기도 싫다.
+It's a cctor of the module. I don't want to see it.
 
-5번줄의 함수를 클릭해서 들어가보면 AntiTamper 함수다.
+It seems like AntiTamper function when we enter the function on line 5.
 
-저럴 경우에는 저 AntiTamper 코드가 진행된 이후의 모듈만 쏙 빼오면 된다.
+In this case, we can just pick the module that AntiTamper code has processed.
 
 ![](img/crackme-3.png)
 
-저기 `Open Module from Memory`를 실행시키면 AntiTamper가 해제된 모듈을 불러올 수 있다.
+Set a breakpoint after the AntiTamper code, and click `Open Module from Memory`
 
-해제된 모듈을 이리저리 살피다 보면 폼을 발견할 수 있다. 그리고 Clipboard 관련 코드를 발견한다.
+When you get around in the (slightly) deobfuscated module, you can find forms and some code about Clipbaord.
 
 ![](img/crackme-4.png)
 
-그러자.. ConfuserEx가 패킹되어있음에도 솔버수가 많다는 걸 눈치채고 나서 바로 직접 실행해 메모장에 붙여넣었다.
+Then.. I suddenly figure out that the number of solvers is quite a lot even It was packed with ConfuserEx.
+
+With my intuition, I run it right away, click the button and paste it into Notepad.
 
 ![](img/crackme-5.png)
 
@@ -193,23 +197,14 @@ dukup11ch1 made 8 programs
 
 you just find his programs and write "Yara rule" 
 
-
-
-
-"Hello World"프로그램이 많아...
-
-dukup11ch1가 8개를 만들었어.
-
-그의 프로그램들을 찾고 "Yara rule"을 작성하세요
-
 nc server.trustctf.com 5252
 
-(Code the rule in one line.) (rule은 한줄로 짜시오.)
+(Code the rule in one line.)
 
 Author : dukup11ch1(유기환)
 ```
 
-Yara라는걸 처음 접해서 어떻게 하는지 몰라 [여기](https://yara.readthedocs.io/en/v3.4.0/writingrules.html)를 참고했다.
+I don't really know what the Yara is, so I refer to [HERE](https://yara.readthedocs.io/en/v3.4.0/writingrules.html).
 
 ```py
 import yara
@@ -242,13 +237,14 @@ if count == 16:
     print("TRUST{EXAMPLE_FLAG}")
 ```
 
-코드를 보면 `myfile` 리스트의 파일들은 매칭되어야 하고 `notmine`의 파일들은 매칭되면 안되는 코드로 보인다.
 
-그럼 공통점을 찾아보자.
+Looking at the code, the files in the `myfile` list should be matched, and the files in `notmine` should not.
 
-`8.exe`와 `13.exe`는 둘다 10240바이트이고, `6.exe 7.exe 9.exe 10.exe 11.exe 14.exe`는 `3C 2C 3C 7F 78 4D 52 2C 78 4D 52 2C 78 4D 52 2C 71 ...` 바이트를 가진다는 공통점을 지닌다.
+Then, let's find the `myfile` files in common.
 
-그러면 그를 바탕으로 yara rule을 작성해보자.
+`8.exe` and `13.exe`is both 10240 bytes, and `6.exe 7.exe 9.exe 10.exe 11.exe 14.exe` have `3C 2C 3C 7F 78 4D 52 2C 78 4D 52 2C 78 4D 52 2C 71 ...` common bytes.
+
+Then let's write a yara rule based on it.
 
 ```
 rule dummy
@@ -263,7 +259,7 @@ rule dummy
 rule dummy { strings: $a = { 3C 2C 3C 7F 78 4D 52 2C 78 4D 52 2C 78 4D 52 2C 71 35 C1 2C 72 4D 52 2C AA 29 53 2D 7B 4D 52 2C AA 29 51 2D 79 4D 52 2C AA 29 57 2D 6A 4D 52 2C AA 29 56 2D 75 4D 52 2C 1D 2B 53 2D 7A 4D 52 2C 78 4D 53 2C 55 4D 52 2C 93 29 5B 2D 7A 4D 52 2C 93 29 AD 2C 79 4D 52 2C 93 29 50 2D 79 4D 52 2C 52 69 63 68 78 4D 52} condition: filesize == 10240 or $a }
 ```
 
-다음과 같이 작성해서 nc로 보내면 플래그가 나온다.
+Write it as above and send it to nc server, and tada! We can see our flag!
 
 ![](img/yara.png)
 
@@ -276,11 +272,11 @@ FLAG: TRUST{I9n0re_PDB_R1CH_I'm_s0rry_TT}
 ### MIC CHECK! (100pts)
 
 ```
-1st TRUST CTF에 오신걸 환영합니다!
+Welcome to 1st TRUST CTF!
 
-Notifications과 Rules를 반드시 읽어주세요!
+Please read Notifications and Rules!
 
-디스코드(IRC) : https://discord.gg/ZYyupm8
+Discord : https://discord.gg/ZYyupm8
 
 Flag : TRUST{Welcome_CTF_Have_FUN!}
 ```
@@ -292,16 +288,18 @@ FLAG: TRUST{Welcome_CTF_Have_FUN!}
 ### Easy Taebo (100pts)
 
 ```
-TRUST CTF에서도 태.보.해.
+Do Taebo in TRUST CTF!
 
 nc server.trustctf.com 44923
 
-Author : st4nw(조정훈)
+Author : st4nw
 ```
 
-여러분들 모두 태보해 @==(^o^)@
+Taebo is the combination of Taekwondo and Boxing. It has been a meme quite a lot. If you want to know what it is, go and see [Wikipedia](https://en.wikipedia.org/wiki/Tae_Bo).
 
-아무튼 다음 액션 리스트도 같이 준다.
+Let's do taebo! @==(^o^)@
+
+It gives a action list as below.
 
 ```
 'left_jab' : '@==(^0^)@'
@@ -318,7 +316,7 @@ Author : st4nw(조정훈)
 'right_kick' : '@==(^0^)||@'
 ```
 
-이걸 가지고 코드를 슥삭 짜면 된다.
+And, we can write simple code with it!
 
 ```py
 from pwn import *
@@ -359,7 +357,7 @@ for i in range(100):
 r.recvuntil('}')
 ```
 
-정말 급하게 짠 코드라 그냥 작동은 한다.
+It kinda *works*, but I can't tell that this is the best code :P
 
 ![](img/taebo.png)
 
@@ -370,25 +368,25 @@ FLAG: TRUST{w0w_y0u_9o7_4_w0nd3rfu1_b0dy_lik3_m3}
 ### IDENTITY_5 (356pts)
 
 ```
-확장자는 identity_5.apk 입니다. .zip을 지워주세요.
-I recommend excute it!!! and input "trust", "TRUST", "flag"!!!! have a good luck :)
+The real filename is identity_5.apk. Remove the .zip.
+I recommend execute it!!! and input "trust", "TRUST", "flag"!!!! have a good luck :)
 
 flag3 : https://bit.ly/2S7lqhH
 
 Author : m0nday(이동준)
 ```
 
-jadx로 디컴한 코드를 보자.
+Let's take a look at the code that decompiled with jadx.
 
 ![](img/identity.png)
 
 ![](img/identity-2.png)
 
-그리고 apktool로 리소스를 확인해보자.
+And, check the resource with apktool.
 
 ![](img/identity-3.png)
 
-이제 모든 QR코드들(위에 설명에 있는것 추가)을 모아보자.
+Gather all of the QR codes (includes that in the description).
 
 ![](img/flag.jpg)
 ![](img/flag2.jpg)
@@ -396,7 +394,7 @@ jadx로 디컴한 코드를 보자.
 ![](img/flag4.jpg)
 ![](img/flag5.jpg)
 
-이 QR코드를 전부 찍어서 연결하면 플래그가 나온다.
+Scan all of the QR codes, join and we can finally see the flag!
 
 ```
 FLAG: TRUST{Th1s_1s_fl@g_@ndr0id_@add_Qrc0d3}
@@ -410,9 +408,9 @@ SC2 is What?
 Author : dukup11ch1(유기환)
 ```
 
-스타크래프트를 까느라 시간이 거의 지나간것 같았다. 처음에는 에디터가 안열려서 걱정하고 있었는데 알고보니까 계속 기다려야 했던거였다.
+A lot of time has passed to get the Starcraft. At first, I was worried because the editor didn't open, but I realized that I had to wait.
 
-아무튼 기다리고 조금 있으면 미니맵으로 플래그가 나온다.
+With a little patience, we can see flag in the minimap.
 
 ![](img/starcraft.png)
 
@@ -423,20 +421,20 @@ FLAG: TRUST{FUN}
 ### RSA1 (479pts)
 
 ```
-RSA 암호문 : 1649729212658550722856763813613372
-암호화에 사용된 소수 1 : 36465956589847261
-암호화에 사용된 소수 2 : 46496464168468673
-복호화 키 : 1275312736838027047985273062147003 
-플래그 형식:TRUST{~복호화값~}
+RSA Cipher : 1649729212658550722856763813613372
+Prime 1 that used for encryption : 36465956589847261
+Prime 2 that used for encryption : 46496464168468673
+Decryption Key : 1275312736838027047985273062147003 
+Flag Format: TRUST{~Plain text~}
 
-Author : 생선스프 (문의 : m0nday)
+Author : 생선스프 (For ask : m0nday)
 ```
 
-RSA 복호화는 [dcode.fr](https://www.dcode.fr/rsa-cipher)에서 방법을 찾게 되었다.
+I have no information about RSA. But, I could find some information in [dcode.fr](https://www.dcode.fr/rsa-cipher)
 
 ![](img/rsa1-2.png)
 
-파이썬으로 돌린 뒤에 두 숫자씩 끊어서 아스키로 바꾸면 플래그가 나온다.
+Run it with python, split it every two characters, convert them into ascii, join and then we can see flag!
 
 ![](img/rsa1.png)
 
