@@ -3,7 +3,7 @@
 ![](img/scoreboard.png)
 ![](img/challs.png)
 
-> 공주대 영재 떨어진 뎁온누리 (2등, 2877pts)
+> 공주대 영재 떨어진 뎁온누리 (2nd place, 2877pts)
 
 I've barely participated in any CTF, so I couldn't focus well on the challenge.
 
